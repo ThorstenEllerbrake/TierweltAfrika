@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prüfungsfragen-Auswahltool – Tierwelt Afrikas</title>
+<style>
+  :root {
+    --ink: #1a1a1a; --muted: #6b7280; --bg: #f4f6f8; --card: #ffffff; --line: #e2e6ea; --navy: #0D1B2A;
+    --afb1-b: #1A3A5C; --afb1-f: #E3F0FC;
+    --afb2-b: #2E7D32; --afb2-f: #F1F8F1;
+    --afb3-b: #E65100; --afb3-f: #FFF8F0;
+    --ki-b: #7B1FA2; --ki-f: #F3E5F5;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Arial, Helvetica, sans-serif; background: var(--bg); color: var(--ink); margin: 0; padding: 1.5rem 1rem 4rem; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  header.page h1 { font-size: 1.5rem; color: var(--navy); margin: 0 0 0.15rem; }
+  header.page p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+  .addbar { display: flex; gap: 0.5rem; margin: 1.2rem 0; }
+  .addbar input { flex: 1; padding: 0.55rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; font-size: 0.95rem; background: var(--card); }
+  button { font-family: inherit; cursor: pointer; border: none; border-radius: 8px; padding: 0.55rem 0.9rem; font-size: 0.85rem; font-weight: 600; }
+  button:active { transform: scale(0.98); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-primary { background: var(--navy); color: #fff; }
+  .btn-ghost { background: #eef1f4; color: var(--navy); }
+  .btn-small { padding: 0.4rem 0.7rem; font-size: 0.78rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
+  .card-head { display: flex; align-items: center; gap: 0.7rem; padding: 0.9rem 1.1rem; flex-wrap: wrap; }
+  .card-name { font-size: 1.05rem; font-weight: 700; color: var(--navy); flex: 1; }
+  .card-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0 1.1rem 1rem; }
+  .panel { border-top: 1px solid var(--line); padding: 1rem 1.1rem 1.1rem; background: #fafbfc; }
+  .panel h4 { margin: 0 0 0.6rem; font-size: 0.95rem; color: var(--navy); }
+  .block-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.4rem; margin-bottom: 0.9rem; }
+  .block-check { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 0.4rem 0.6rem; }
+  .block-check.pflicht { border-color: #1A3A5C; background: #E3F0FC; }
+  .num-row { display: flex; align-items: center; gap: 0.6rem; margin: 0.5rem 0; font-size: 0.87rem; flex-wrap: wrap; }
+  .num-row input { width: 50px; padding: 0.35rem 0.5rem; border: 1px solid var(--line); border-radius: 7px; text-align: center; font-family: inherit; }
+  .num-row.ki-row { padding: 0.5rem 0.7rem; background: var(--ki-f); border: 1px solid var(--ki-b); border-radius: 8px; }
+  .num-row.ki-row strong { color: var(--ki-b); }
+  .qbox { border-radius: 8px; padding: 0.7rem 0.9rem; margin-bottom: 0.6rem; border-left: 5px solid; }
+  .qbox.afb1 { background: var(--afb1-f); border-color: var(--afb1-b); }
+  .qbox.afb2 { background: var(--afb2-f); border-color: var(--afb2-b); }
+  .qbox.afb3 { background: var(--afb3-f); border-color: var(--afb3-b); }
+  .qbox.ki { background: var(--ki-f); border-color: var(--ki-b); }
+  .qbox .qlabel { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.25rem; }
+  .qbox.afb1 .qlabel { color: var(--afb1-b); }
+  .qbox.afb2 .qlabel { color: var(--afb2-b); }
+  .qbox.afb3 .qlabel { color: var(--afb3-b); }
+  .qbox.ki .qlabel { color: var(--ki-b); }
+  .qbox .qtext { font-size: 0.92rem; margin-bottom: 0.5rem; }
+  .rating { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .rating button { padding: 0.3rem 0.6rem; font-size: 0.78rem; background: #fff; border: 1px solid var(--line); color: var(--muted); }
+  .rating button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .block-heading { font-weight: 700; color: var(--navy); margin: 1rem 0 0.5rem; font-size: 0.95rem; }
+  .sub-heading { font-weight: 700; font-size: 0.8rem; margin: 0.8rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  .sub-heading.fach { color: var(--navy); }
+  .sub-heading.ki { color: var(--ki-b); }
+  table.history { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  table.history th, table.history td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.history th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; }
+  .hist-empty { color: var(--muted); font-size: 0.85rem; }
+  .toast { position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; padding: 0.6rem 1.1rem; border-radius: 8px; font-size: 0.85rem; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; z-index: 50; }
+  .toast.show { opacity: 1; }
+  .empty { text-align: center; color: var(--muted); padding: 3rem 1rem; background: var(--card); border-radius: 12px; border: 1px dashed var(--line); }
+  .footer-note { text-align: center; color: var(--muted); font-size: 0.78rem; margin-top: 2rem; }
+  details summary { cursor: pointer; font-size: 0.85rem; color: var(--navy); margin: 0.4rem 0; }
+  .auswertung { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 0.9rem 1rem; margin: 0.8rem 0; }
+  .auswertung h5 { margin: 0 0 0.6rem; font-size: 0.88rem; color: var(--navy); }
+  .chart-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem; font-size: 0.8rem; }
+  .chart-row .rlabel { width: 28px; font-weight: 700; color: var(--muted); text-align: right; }
+  .chart-row .bar-track { flex: 1; background: #eef1f4; border-radius: 5px; height: 16px; overflow: hidden; }
+  .chart-row .bar-fill { height: 100%; border-radius: 5px; }
+  .chart-row .rcount { width: 22px; color: var(--muted); font-size: 0.78rem; }
+  .grade-suggestion { margin-top: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 8px; background: #eef1f4; font-size: 0.86rem; }
+  .grade-suggestion strong { color: var(--navy); }
+  .afb-breakdown { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.6rem; font-size: 0.8rem; }
+  .afb-breakdown span.tag { padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 700; font-size: 0.72rem; margin-right: 0.3rem; }
+  .disclaimer { font-size: 0.75rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page">
+    <h1>Prüfungsfragen-Auswahltool</h1>
+    <p>WPK Naturwissenschaften · Einheit 2: Tierwelt Afrikas · mündliches Prüfungsgespräch</p>
+  </header>
+
+  <div class="addbar">
+    <input type="text" id="newGroupName" placeholder="Neue Gruppe anlegen, z. B. 'Gruppe Rot'" maxlength="60">
+    <button class="btn-primary" id="addGroupBtn">+ Gruppe</button>
+  </div>
+  <div class="addbar" style="margin-top:-0.6rem;">
+    <button class="btn-ghost btn-small" id="exportBtn">Daten exportieren (Backup)</button>
+    <button class="btn-ghost btn-small" id="importBtn">Daten importieren</button>
+    <input type="file" id="importFile" accept="application/json" style="display:none;">
+  </div>
+
+  <div id="groupList"></div>
+  <div class="footer-note">Alle Daten werden lokal in diesem Browser auf diesem Gerät gespeichert und bleiben dauerhaft erhalten. Erstelle regelmäßig ein Backup über „Daten exportieren“. Dieses Tool ist ein Lehrkraft-Werkzeug – nicht für its-learning gedacht.</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const BLOCKS_META = {
+  A: { title: "Afrikas Lebensräume und Klimazonen", pflicht: true },
+  B: { title: "Angepasstheiten – Leben in extremen Lebensräumen", pflicht: true },
+  C: { title: "Nahrungsnetze und Ökosystemgleichgewicht", pflicht: true },
+  D: { title: "Große Säugetiere – Elefant, Löwe, Leopard", pflicht: false },
+  E: { title: "Vögel Afrikas", pflicht: false },
+  F: { title: "Reptilien, Amphibien und Insekten", pflicht: false },
+  G: { title: "Meeresküsten und Korallenriffe", pflicht: false },
+  H: { title: "Wilderei und illegaler Tierhandel", pflicht: false },
+  I: { title: "Klimawandel und Tierwelt", pflicht: false },
+  J: { title: "Naturschutz, Schutzgebiete und Kolonialgeschichte", pflicht: false },
+  K: { title: "Ökotourismus – Chancen und Konflikte", pflicht: false },
+  L: { title: "Mensch-Tier-Konflikte und Koexistenz", pflicht: false },
+};
+
+const QUESTIONS = {
+  A: {
+    afb1: [
+      "Nenne die fünf wichtigsten Lebensraumtypen Afrikas.",
+      "Nenne drei Klimazonen, die in Afrika vorkommen.",
+      "Beschreibe, was den tropischen Regenwald klimatisch kennzeichnet.",
+      "Nenne die größte Heißwüste der Welt und ihren ungefähren Flächenumfang.",
+      "Beschreibe, wodurch sich Feucht- und Trockensavanne unterscheiden.",
+      "Nenne zwei Tierarten, die typisch für die ostafrikanische Savanne sind.",
+      "Beschreibe, warum der Kilimandscharo trotz Äquatornähe Schnee trägt.",
+    ],
+    afb2: [
+      "Erkläre, warum in Afrika direkt nebeneinander Wüste und Regenwald entstehen können.",
+      "Erkläre den Einfluss des Benguela-Stroms auf die Namib-Wüste.",
+      "Werte ein Klimadiagramm einer Savanne nach dem 7-Schritte-Schema aus.",
+      "Vergleiche Regenwald und Savanne hinsichtlich Niederschlag und Artenvielfalt.",
+      "Erkläre den Zusammenhang zwischen geografischer Lage und Lebensraumtyp.",
+    ],
+    afb3: [
+      "Beurteile, warum die geografische Lage ein besserer Erklärungsansatz für die Tierwelt ist als das Aufzählen einzelner Arten.",
+      "Bewerte, wie verlässlich Klimadaten die Einteilung Afrikas in Lebensräume begründen.",
+    ],
+    ki1: [
+      "Nenne den Unterschied zwischen einem allgemeinen Prompt und einem Perspektiven-Prompt.",
+      "Beschreibe, was mit „Multiperspektivität“ (KI-Level 3) gemeint ist.",
+      "Nenne einen Grund, warum eine KI-Antwort zu Afrikas Savanne eine bestimmte Perspektive bevorzugen kann.",
+    ],
+    ki2: [
+      "Erkläre am Beispiel der Savanne, wie sich eine KI-Antwort verändert, wenn man nach der Sicht einer Massai-Hirtenfamilie fragt.",
+      "Erkläre, warum es sinnvoll ist, KI-Ergebnisse zu Lebensräumen mit einer seriösen Quelle abzugleichen.",
+    ],
+    ki3: [
+      "Beurteile, wessen Perspektive in einer allgemeinen KI-Beschreibung der Savanne zuerst fehlt – und warum.",
+    ],
+  },
+  B: {
+    afb1: [
+      "Nenne je ein Beispiel für eine morphologische, physiologische und Verhaltensangepasstheit.",
+      "Beschreibe, wie der Elefant über seine Ohren die Körpertemperatur reguliert.",
+      "Nenne die wichtigste Angepasstheit des Dromedars an das Wüstenleben.",
+      "Beschreibe, wozu die Giraffe ihren langen Hals nutzt.",
+      "Nenne die Höchstgeschwindigkeit des Geparden und ein Merkmal, das sie ermöglicht.",
+      "Beschreibe, was im Höcker eines Kamels gespeichert wird.",
+    ],
+    afb2: [
+      "Erkläre, warum eine Angepasstheit immer nur auf einen bestimmten Lebensraum bezogen ist.",
+      "Erkläre die Angepasstheiten des Geparden an das schnelle Jagen.",
+      "Vergleiche die Angepasstheiten eines Savannen- und eines Wüstentieres.",
+      "Erkläre, warum eine starke Spezialisierung auch ein Nachteil sein kann.",
+      "Begründe, warum das große Herz der Giraffe eine Folge ihres Körperbaus ist.",
+    ],
+    afb3: [
+      "Beurteile, ob eine hoch spezialisierte Art wie der Gepard im Vorteil oder Nachteil ist, wenn sich ihr Lebensraum schnell verändert.",
+      "Bewerte, warum der Irrtum um den Kamelhöcker ein gutes Beispiel für die Selbstkorrektur der Wissenschaft ist.",
+    ],
+    ki1: [
+      "Nenne eine Frage, mit der man eine KI zum Perspektivenwechsel bei Tierwissen auffordert.",
+      "Beschreibe, was mit „lokalem Wissenssystem“ gemeint ist.",
+      "Nenne einen Grund, warum lokales Wissen in KI-Antworten oft fehlt.",
+    ],
+    ki2: [
+      "Erkläre, wie sich eine KI-Antwort zum Elefantenverhalten verändert, wenn man nach dem Wissen ostafrikanischer Gemeinschaften fragt.",
+      "Erkläre, warum westlich geprägtes Wissen in KI-Systemen häufig überrepräsentiert ist.",
+    ],
+    ki3: [
+      "Beurteile, was es für die Verlässlichkeit einer KI-Antwort bedeutet, wenn lokale Wissenssysteme systematisch fehlen.",
+    ],
+  },
+  C: {
+    afb1: [
+      "Nenne die Begriffe Produzent, Primärkonsument und Sekundärkonsument mit je einem Savannenbeispiel.",
+      "Beschreibe, was eine Schlüsselart ist.",
+      "Nenne den ungefähren Anteil der Energie, der von einer Trophieebene zur nächsten gelangt.",
+      "Beschreibe die Rolle des Elefanten als Schlüsselart.",
+      "Nenne zwei Aasfresser der afrikanischen Savanne.",
+      "Beschreibe, warum es mehr Zebras als Löwen gibt.",
+    ],
+    afb2: [
+      "Erkläre, warum auf einer Savanne viele Zebras, aber nur wenige Löwen leben können.",
+      "Erkläre, wie der Wegfall einer Schlüsselart ein Ökosystem verändert.",
+      "Werte eine Energiepyramide nach dem 7-Schritte-Schema aus.",
+      "Erkläre die 10-Prozent-Regel der Energieweitergabe.",
+      "Vergleiche die Rolle von Produzenten und Konsumenten im Nahrungsnetz.",
+    ],
+    afb3: [
+      "Beurteile, warum das Verschwinden einer einzigen Schlüsselart ein ganzes Ökosystem verändern kann.",
+      "Bewerte am Beispiel des Elefanten, welche Folgen sein Verschwinden für andere Arten hätte.",
+    ],
+    ki1: [
+      "Nenne einen Perspektiven-Prompt, der die Sicht von Kleinbauern auf den Elefanten einbezieht.",
+      "Beschreibe, wie sich das Bild einer Tierart je nach Perspektive ändern kann.",
+      "Nenne einen Grund, warum eine KI den Elefanten zuerst als „nützlich“ darstellt.",
+    ],
+    ki2: [
+      "Erkläre, wie sich die Bewertung des Elefanten ändert, wenn man Kleinbauern in Simbabwe nach ihrer Sicht fragt.",
+      "Erkläre, warum ökologische und wirtschaftliche Perspektiven auf dieselbe Art auseinanderfallen können.",
+    ],
+    ki3: [
+      "Beurteile, was der Perspektivwechsel beim Elefanten für eine gerechte Naturschutzpolitik bedeutet.",
+    ],
+  },
+  D: {
+    afb1: [
+      "Nenne die fünf Arten der „Big Five“.",
+      "Beschreibe die ökologische Rolle des Löwen als Spitzenräuber.",
+      "Nenne den IUCN-Gefährdungsstatus einer der drei großen Raubkatzen Afrikas.",
+      "Beschreibe, warum der Elefant als Ingenieur-Art bezeichnet wird.",
+      "Nenne ein Verhalten, das den Leoparden von anderen Großkatzen unterscheidet.",
+      "Beschreibe die Rolle der Matriarchin in einer Elefantenfamilie.",
+    ],
+    afb2: [
+      "Werte ein Diagramm zur Bestandsentwicklung afrikanischer Säugetiere aus.",
+      "Erkläre, warum Löwen für das Gleichgewicht der Savanne wichtig sind.",
+      "Erkläre, warum große Säugetiere im internationalen Naturschutz besonders viel Aufmerksamkeit erhalten.",
+      "Vergleiche Elefant und Leopard hinsichtlich ihrer ökologischen Rolle.",
+    ],
+    afb3: [
+      "Beurteile, ob die Bevorzugung großer Säugetiere im Naturschutz ökologisch gerechtfertigt ist.",
+      "Bewerte, ob Afrika mehr reine Schutzgebiete oder mehr gemeindebasierte Ansätze für seine großen Säugetiere braucht.",
+    ],
+    ki1: [
+      "Nenne einen Perspektiven-Prompt zur Frage, welche Tiere für den Erhalt des Ökosystems wichtig sind.",
+      "Beschreibe, was der Vergleich westlicher und lokaler Prioritäten zeigen kann.",
+      "Nenne einen Grund, warum eine KI bestimmte „wichtige“ Arten bevorzugt nennt.",
+    ],
+    ki2: [
+      "Erkläre, warum lokale Gemeinschaften andere Arten für wichtig halten können als die westliche Naturschutzforschung.",
+      "Erkläre, wie ein Perspektiven-Prompt eine einseitige KI-Antwort ausgleichen kann.",
+    ],
+    ki3: [
+      "Beurteile, was es bedeutet, wenn eine KI bei der Frage nach „wichtigen“ Tieren globalnördliche Prioritäten bevorzugt.",
+    ],
+  },
+  E: {
+    afb1: [
+      "Nenne die ungefähre Zahl der in Afrika vorkommenden Vogelarten.",
+      "Beschreibe die ökologische Rolle der Geier.",
+      "Nenne eine Gefahr, die Zugvögeln auf ihrem Weg über die Sahara droht.",
+      "Beschreibe, wovon sich die Zwergflamingos der ostafrikanischen Sodaseen ernähren.",
+      "Nenne einen afrikanischen Greifvogel.",
+    ],
+    afb2: [
+      "Erkläre, warum der Rückgang der Geier ein Problem für ganze Ökosysteme ist.",
+      "Erkläre, warum Vogelschutz eine internationale Aufgabe ist.",
+      "Erkläre den Zusammenhang zwischen Klimawandel und Zugrouten (Rückbezug Einheit 1).",
+      "Vergleiche die ökologische Rolle von Geiern und Greifvögeln.",
+    ],
+    afb3: [
+      "Beurteile, warum ökologisch wichtige, aber unscheinbare Vögel wie Geier weniger Aufmerksamkeit erhalten.",
+      "Bewerte, was der Geier-Rückgang für den Naturschutz insgesamt bedeutet.",
+    ],
+    ki1: [
+      "Nenne einen Perspektiven-Prompt zu bedrohten Vogelarten aus lokaler Sicht.",
+      "Beschreibe, warum indigene Perspektiven auf Vogelvielfalt in KI-Antworten fehlen können.",
+      "Nenne einen Grund, warum eine KI bekannte Arten häufiger nennt als unscheinbare.",
+    ],
+    ki2: [
+      "Erkläre, wie sich eine KI-Antwort ändert, wenn man nach der Bedeutung von Vögeln für Gemeinschaften im Nigerdelta fragt.",
+      "Erkläre, warum der Abgleich mit einer Fachquelle (z. B. BirdLife) bei KI-Antworten wichtig ist.",
+    ],
+    ki3: [
+      "Beurteile, welche Perspektive auf Vogelvielfalt in einer allgemeinen KI-Antwort fehlt.",
+    ],
+  },
+  F: {
+    afb1: [
+      "Nenne je ein Beispiel für ein Reptil, eine Amphibie und eine Insektengruppe Afrikas.",
+      "Beschreibe die ökologische Rolle des Nilkrokodils.",
+      "Nenne, warum Amphibien als Bioindikatoren gelten.",
+      "Beschreibe, was Termiten für den Boden leisten.",
+      "Nenne eine Bedrohung für afrikanische Frösche.",
+    ],
+    afb2: [
+      "Erkläre, warum Insekten wie Termiten oder Mistkäfer für das Ökosystem unverzichtbar sind.",
+      "Erkläre, warum Amphibien empfindliche Bioindikatoren sind.",
+      "Erkläre, wie die Tsetsefliege indirekt Wildtierlebensräume geschützt hat.",
+      "Vergleiche die ökologische Bedeutung von Nilkrokodil und Mistkäfer.",
+    ],
+    afb3: [
+      "Beurteile, ob es gerechtfertigt ist, dass Naturschutz-Spenden vor allem großen Säugetieren zugutekommen.",
+      "Bewerte, warum unscheinbare Arten für das Ökosystem oft wichtiger sind als bekannte Charisma-Arten.",
+    ],
+    ki1: [
+      "Nenne einen Prompt, der die KI zwingt, auch Insekten und Amphibien zu berücksichtigen.",
+      "Beschreibe, was mit „Charisma-Arten“ gemeint ist.",
+      "Nenne einen Grund, warum eine KI große Säugetiere bevorzugt nennt.",
+    ],
+    ki2: [
+      "Erkläre, wie sich eine KI-Antwort ändert, wenn man sie ausdrücklich nach Insekten und Amphibien fragt.",
+      "Erkläre, warum die Sichtbarkeit einer Art ihre Darstellung in KI-Antworten beeinflusst.",
+    ],
+    ki3: [
+      "Beurteile, welche Folgen die Bevorzugung sichtbarer Arten durch KI für den Artenschutz haben kann.",
+    ],
+  },
+  G: {
+    afb1: [
+      "Nenne drei Hauptbedrohungen für ostafrikanische Korallenriffe.",
+      "Beschreibe, was bei der Korallenbleiche geschieht.",
+      "Nenne, wodurch sich der Benguela-Strom auszeichnet.",
+      "Beschreibe drei Ökosystemleistungen von Mangrovenwäldern.",
+      "Nenne eine Ursache der Ozeanversauerung (Rückbezug Einheit 1).",
+    ],
+    afb2: [
+      "Erkläre den Mechanismus der Korallenbleiche Schritt für Schritt.",
+      "Erkläre, warum der Benguela-Auftrieb besonders produktiv ist.",
+      "Vergleiche Korallenriff und Benguela-Auftrieb hinsichtlich Bedeutung und Bedrohung.",
+      "Erkläre, warum wiederholte Bleichereignisse besonders gefährlich sind.",
+    ],
+    afb3: [
+      "Beurteile, ob der Schutz von Korallenriffen eher über lokale Maßnahmen oder über globalen Klimaschutz erfolgen sollte.",
+      "Bewerte, warum lokale Schutzmaßnahmen an Grenzen stoßen, wenn die Erwärmung nicht begrenzt wird.",
+    ],
+    ki1: [
+      "Nenne einen Perspektiven-Prompt zum Korallenschutz aus Sicht von Küstengemeinden.",
+      "Beschreibe, warum wirtschaftliche Abhängigkeiten in KI-Antworten fehlen können.",
+      "Nenne einen Grund, warum eine KI beim Meeresschutz zuerst globale Lösungen nennt.",
+    ],
+    ki2: [
+      "Erkläre, wie sich eine KI-Antwort ändert, wenn man nach den Prioritäten kenianischer Küstengemeinden fragt.",
+      "Erkläre, warum lokale Nutzungsinteressen für wirksamen Meeresschutz mitgedacht werden müssen.",
+    ],
+    ki3: [
+      "Beurteile, wessen Interessen eine allgemeine KI-Antwort zum Korallenschutz zuerst übergeht.",
+    ],
+  },
+  H: {
+    afb1: [
+      "Nenne zwei durch Wilderei stark bedrohte Tierarten Afrikas.",
+      "Beschreibe, woraus Nashornhorn besteht.",
+      "Nenne den ungefähren jährlichen Umsatz der weltweiten Wildtierkriminalität.",
+      "Beschreibe, was das CITES-Abkommen regelt.",
+      "Nenne das Jahr, in dem das letzte männliche Nördliche Breitmaulnashorn starb.",
+    ],
+    afb2: [
+      "Erkläre, warum Wilderei trotz internationaler Verbote fortbesteht.",
+      "Erkläre den Zusammenhang zwischen Armut vor Ort und dem Profit krimineller Netzwerke.",
+      "Werte ein Diagramm zum Wilderei-Trend bei Elefanten aus.",
+      "Erkläre, warum die CITES-Ausnahmeverkäufe umstritten sind.",
+    ],
+    afb3: [
+      "Beurteile, ob ein kontrollierter legaler Handel eine Alternative zum Elfenbein-Verbot sein könnte.",
+      "Bewerte, ob Wilderei wirksamer durch Strafverfolgung oder durch wirtschaftliche Beteiligung der Bevölkerung bekämpft wird.",
+    ],
+    ki1: [
+      "Nenne einen Perspektiven-Prompt zur Wilderei aus Sicht einer betroffenen Bauernfamilie.",
+      "Beschreibe, wie die Perspektive beeinflusst, was als „Problem“ gilt.",
+      "Nenne einen Grund, warum eine KI Wilderei zuerst als Strafverfolgungsproblem darstellt.",
+    ],
+    ki2: [
+      "Erkläre, wie sich die vorgeschlagene Lösung ändert, wenn man Wilderei aus Sicht einer armen Bauernfamilie betrachtet.",
+      "Erkläre, warum die Definition von „Problem“ und „Lösung“ von der Perspektive abhängt.",
+    ],
+    ki3: [
+      "Beurteile, was der Perspektivwechsel bei der Wilderei über einseitige KI-Lösungen verrät.",
+    ],
+  },
+  I: {
+    afb1: [
+      "Nenne drei Beispiele, wie der Klimawandel afrikanische Lebensräume verändert.",
+      "Beschreibe, warum sich Afrika schneller erwärmt als der globale Durchschnitt.",
+      "Nenne eine Tierart, die bereits nachweisbar unter dem Klimawandel leidet.",
+      "Beschreibe die Folgen des austrocknenden Lake Turkana für Nilkrokodile.",
+      "Nenne den Zusammenhang zwischen Ozeanerwärmung und Korallenbleiche.",
+    ],
+    afb2: [
+      "Erkläre an einem Beispiel, wie der Klimawandel eine Tierart direkt bedroht (nutze Lebensraum, Angepasstheit, Klimawandel).",
+      "Erkläre, warum Zugvögel besonders empfindlich auf Klimaveränderungen reagieren.",
+      "Vergleiche, wie der Klimawandel drei verschiedene Arten unterschiedlich bedroht.",
+      "Erkläre den Zusammenhang zwischen Dürre im Sahel und veränderten Wanderungen.",
+    ],
+    afb3: [
+      "Beurteile, ob der Klimawandel oder die Wilderei die größere kurzfristige Bedrohung ist.",
+      "Beurteile, welche Verantwortung sich für Industrieländer aus Afrikas Betroffenheit ergibt (Rückbezug Einheit 1).",
+    ],
+    ki1: [
+      "Nenne einen Perspektiven-Prompt zu den Klimafolgen aus Sicht eines Biologen in Nairobi.",
+      "Beschreibe, wie sich die Qualität einer KI-Antwort durch eine konkrete Perspektive ändern kann.",
+      "Nenne einen Grund, warum lokale Expertise in globalen Debatten oft überhört wird.",
+    ],
+    ki2: [
+      "Erkläre, wie ein Perspektiven-Prompt die inhaltliche und emotionale Qualität einer KI-Antwort zu Klimafolgen verändert.",
+      "Erkläre, warum die Herkunft der Expertise beeinflusst, wessen Stimme in KI-Antworten Gehör findet.",
+    ],
+    ki3: [
+      "Beurteile, was es für globale Naturschutzdebatten bedeutet, wenn KI vorwiegend globalnördliche Expertise abbildet.",
+    ],
+  },
+  J: {
+    afb1: [
+      "Nenne zwei berühmte afrikanische Schutzgebiete und je eine geschützte Tierart.",
+      "Beschreibe, was mit „Fortress Conservation“ gemeint ist.",
+      "Nenne eine Gemeinschaft, die bei der Gründung von Nationalparks verdrängt wurde.",
+      "Beschreibe die Grundidee der gemeindebasierten Naturschutzarbeit.",
+      "Nenne ein Land, in dem sich Bestände durch gemeindebasierten Schutz erholt haben.",
+    ],
+    afb2: [
+      "Erkläre, wie die koloniale Gründung eines Nationalparks und die Verdrängung lokaler Gemeinschaften zusammenhängen.",
+      "Erkläre, warum Naturschutz scheitern kann, wenn die lokale Bevölkerung nicht profitiert.",
+      "Vergleiche klassischen Nationalpark und gemeindebasierten Naturschutz am Beispiel einer Art.",
+      "Erkläre, warum das Bild der „unberührten Wildnis“ historisch unzutreffend ist.",
+    ],
+    afb3: [
+      "Beurteile, ob Naturschutz in Afrika ohne Nutzen für die lokale Bevölkerung langfristig erfolgreich sein kann.",
+      "Beurteile, ob ehemalige Kolonialstaaten eine besondere Verantwortung für afrikanische Tierwelt tragen.",
+    ],
+    ki1: [
+      "Nenne die drei Perspektiven, aus denen man die KI zum Serengeti-Schutz befragen sollte.",
+      "Beschreibe, warum dieser Block als KI-Schwerpunktblock gilt.",
+      "Nenne einen Grund, warum eine KI bei kolonial geprägten Themen bestimmte Stimmen bevorzugt.",
+    ],
+    ki2: [
+      "Erkläre, wie sich die KI-Antwort zum Serengeti-Schutz zwischen der Massai-Perspektive und der Sicht einer Naturschutzorganisation unterscheidet.",
+      "Erkläre, warum KI zu Naturschutz in Afrika globalnördliche Stimmen systematisch bevorzugt.",
+    ],
+    ki3: [
+      "Beurteile, wie man einen KI-Prompt gestalten muss, damit alle Perspektiven auf den Serengeti-Schutz gleichberechtigt vorkommen.",
+    ],
+  },
+  K: {
+    afb1: [
+      "Nenne zwei Chancen des Ökotourismus für Afrikas Tierwelt.",
+      "Nenne zwei Risiken des Ökotourismus für Afrikas Tierwelt.",
+      "Beschreibe, warum ein lebender Löwe wirtschaftlich wertvoller sein kann als ein gewilderter.",
+      "Nenne ein Land, das bewusst auf hochpreisigen, aufkommensschwachen Tourismus setzt.",
+      "Beschreibe, wie zu viele Safarifahrzeuge das Verhalten von Raubkatzen stören.",
+    ],
+    afb2: [
+      "Erkläre, warum ein lebendes Tier durch Tourismus wertvoller sein kann als ein gewildertes.",
+      "Vergleiche hochpreisigen Tourismus (Botswana) mit Massentourismus hinsichtlich der Folgen für die Tierwelt.",
+      "Erkläre, warum nicht jedes Angebot, das sich „öko“ nennt, tierfreundlich ist.",
+      "Erkläre den Zusammenhang zwischen Tourismuseinnahmen und Naturschutzfinanzierung.",
+    ],
+    afb3: [
+      "Beurteile, ob Ökotourismus insgesamt eher Chance oder Gefahr für Afrikas Tierwelt ist.",
+      "Bewerte, wem die Einnahmen aus dem Tierwelt-Tourismus zugutekommen sollten.",
+    ],
+    ki1: [
+      "Nenne einen Perspektiven-Prompt zum Ökotourismus aus Sicht einer Dorfgemeinschaft.",
+      "Beschreibe, wie sich das Bild des Ökotourismus je nach Befragtem ändern kann.",
+      "Nenne einen Grund, warum eine KI Ökotourismus zuerst positiv darstellt.",
+    ],
+    ki2: [
+      "Erkläre, wie sich eine KI-Antwort zum Ökotourismus zwischen der Sicht einer Reiseveranstalterin und einer Dorfgemeinschaft unterscheidet.",
+      "Erkläre, warum die Frage „gut oder schlecht?“ von der Perspektive abhängt.",
+    ],
+    ki3: [
+      "Beurteile, welche Perspektive eine allgemeine KI-Antwort zum Ökotourismus zuerst ausblendet.",
+    ],
+  },
+  L: {
+    afb1: [
+      "Nenne drei afrikanische Tierarten, die häufig in Konflikt mit Menschen geraten.",
+      "Beschreibe, warum Elefanten für Kleinbauern zur Bedrohung werden können.",
+      "Nenne eine Koexistenz-Methode gegen Elefantenschäden.",
+      "Beschreibe, wie die Bienenzaun-Methode funktioniert.",
+      "Nenne den Reizstoff, auf dem die Chili-Methode beruht.",
+    ],
+    afb2: [
+      "Erkläre, warum Mensch-Tier-Konflikte den Schutz einer Art erschweren.",
+      "Erkläre den biologischen Wirkmechanismus der Bienenzaun-Methode.",
+      "Vergleiche die Chili- und die Bienenzaun-Methode hinsichtlich Wirkprinzip und Grenzen.",
+      "Erkläre, warum Koexistenz-Methoden nur mit Einbindung der Bevölkerung funktionieren.",
+    ],
+    afb3: [
+      "Beurteile, ob Menschen und große Wildtiere langfristig auf engem Raum koexistieren können.",
+      "Bewerte, wer für Schäden aufkommen sollte, die geschützte Wildtiere anrichten.",
+    ],
+    ki1: [
+      "Nenne einen Perspektiven-Prompt zum Elefanten-Konflikt aus Sicht einer betroffenen Bäuerin.",
+      "Beschreibe, wie die Perspektive beeinflusst, welche Lösung als akzeptabel gilt.",
+      "Nenne einen Grund, warum eine KI zuerst den Schutz der Tiere in den Vordergrund stellt.",
+    ],
+    ki2: [
+      "Erkläre, wie sich eine KI-Antwort zum Elefanten-Konflikt ändert, wenn man die Sicht einer betroffenen Bäuerin einnimmt.",
+      "Erkläre, warum bei Mensch-Tier-Konflikten die Sicherheit der Menschen und der Schutz der Art gegeneinanderstehen können.",
+    ],
+    ki3: [
+      "Beurteile, was der Perspektivwechsel beim Elefanten-Konflikt über die Grenzen allgemeiner KI-Antworten zeigt.",
+    ],
+  },
+};
+
+
+const STORAGE_KEY = "tierwelt_pruefungstool_v1";
+const RATINGS = ["++", "+", "0", "-", "--"];
+const FACH_AFB = ["afb1", "afb2", "afb3"];
+const KI_AFB = ["ki1", "ki2", "ki3"];
+const ALL_AFB = ["afb1", "afb2", "afb3", "ki1", "ki2", "ki3"];
+const AFB_LABEL = { afb1: "AFB I", afb2: "AFB II", afb3: "AFB III", ki1: "KI · AFB I", ki2: "KI · AFB II", ki3: "KI · AFB III" };
+// AFB-Zuordnung für die Auswertung (KI zählt in dieselbe AFB-Stufe wie die Fachfragen)
+const AFB_GROUP = { afb1: "afb1", afb2: "afb2", afb3: "afb3", ki1: "afb1", ki2: "afb2", ki3: "afb3" };
+const IS_KI = { afb1: false, afb2: false, afb3: false, ki1: true, ki2: true, ki3: true };
+
+let state = { groups: [] };
+let openPanels = {};
+let draft = {};
+
+function defaultDraft() {
+  return {
+    blocks: new Set(),
+    counts: { afb1: 4, afb2: 3, afb3: 1 },   // Fachfragen (unverändert)
+    kiCounts: { ki1: 3, ki2: 2, ki3: 1 },     // KI-Fragen (neu)
+    drawn: null,
+    ratings: {},
+  };
+}
+
+// ============================== AUSWERTUNG ==============================
+
+const RATING_SCORE = { "++": 1, "+": 2, "0": 3, "-": 4, "--": 5 };
+const RATING_COLORS = { "++": "#2E7D32", "+": "#7CB342", "0": "#9E9E9E", "-": "#E65100", "--": "#C62828" };
+
+function gradeSuggestion(avg) {
+  if (avg <= 1.5) return "sehr gut (1)";
+  if (avg <= 2.5) return "gut (2)";
+  if (avg <= 3.5) return "befriedigend (3)";
+  if (avg <= 4.5) return "ausreichend (4)";
+  return "mangelhaft (5)";
+}
+
+function collectRatedEntries(entries) { return entries.filter((e) => e.rating); }
+
+function renderAuswertung(entries) {
+  const rated = collectRatedEntries(entries);
+  if (!rated.length) {
+    return '<div class="auswertung"><h5>Grafische Auswertung</h5><p style="color:var(--muted);font-size:0.85rem;margin:0;">Noch keine Fragen bewertet.</p></div>';
+  }
+  const counts = { "++": 0, "+": 0, "0": 0, "-": 0, "--": 0 };
+  rated.forEach((e) => counts[e.rating]++);
+  const max = Math.max(...Object.values(counts), 1);
+
+  let bars = "";
+  RATINGS.forEach((r) => {
+    const c = counts[r];
+    const pct = (c / max) * 100;
+    bars += '<div class="chart-row"><span class="rlabel">' + r + '</span>' +
+      '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%; background:' + RATING_COLORS[r] + ';"></div></div>' +
+      '<span class="rcount">' + c + '</span></div>';
+  });
+
+  const avgOverall = rated.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / rated.length;
+
+  // Per-AFB breakdown (Fach + KI zusammengefasst je Stufe)
+  const afbGroups = { afb1: [], afb2: [], afb3: [] };
+  rated.forEach((e) => afbGroups[AFB_GROUP[e.afb]].push(e));
+  const afbLabels = { afb1: "AFB I", afb2: "AFB II", afb3: "AFB III" };
+  const afbColors = { afb1: "#1A3A5C", afb2: "#2E7D32", afb3: "#E65100" };
+  let afbHtml = "";
+  Object.entries(afbGroups).forEach(([afb, list]) => {
+    if (!list.length) return;
+    const avg = list.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / list.length;
+    afbHtml += '<span><span class="tag" style="background:' + afbColors[afb] + ';color:#fff;">' + afbLabels[afb] + '</span>Ø ' + avg.toFixed(1) + ' (' + gradeSuggestion(avg) + ')</span>';
+  });
+
+  // Separater KI-Block (nur KI-Fragen)
+  const kiRated = rated.filter((e) => IS_KI[e.afb]);
+  let kiHtml = "";
+  if (kiRated.length) {
+    const kiAvg = kiRated.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / kiRated.length;
+    kiHtml = '<div style="margin-top:0.5rem;"><span class="tag" style="background:#7B1FA2;color:#fff;">KI-Kompetenz</span> ' +
+      kiRated.length + ' Fragen · Ø ' + kiAvg.toFixed(1) + ' (' + gradeSuggestion(kiAvg) + ')</div>';
+  }
+
+  return '<div class="auswertung"><h5>Grafische Auswertung (' + rated.length + ' von ' + entries.length + ' Fragen bewertet)</h5>' +
+    bars +
+    '<div class="grade-suggestion">Gesamtdurchschnitt: <strong>' + avgOverall.toFixed(2) + '</strong> &rarr; Notenvorschlag: <strong>' + gradeSuggestion(avgOverall) + '</strong></div>' +
+    '<div class="afb-breakdown">' + afbHtml + '</div>' + kiHtml +
+    '<div class="disclaimer">Nur ein rechnerischer Vorschlag auf Basis der Ampel-Bewertungen – ersetzt nicht die fachliche Einschätzung der Lehrkraft und ist von der Notengebung der Reihe (Portfolio/KI-Doku/Mitarbeit, siehe Masterdokument Abschnitt 5) zu unterscheiden.</div></div>';
+}
+
+function currentDraftEntries(groupId) {
+  const d = draft[groupId];
+  if (!d || !d.drawn) return [];
+  const entries = [];
+  Object.entries(d.drawn).forEach(([letter, afbSets]) => {
+    ALL_AFB.forEach((afb) => {
+      (afbSets[afb] || []).forEach((q, i) => {
+        const key = letter + "-" + afb + "-" + i;
+        entries.push({ block: letter, afb, question: q, rating: d.ratings[key] || null });
+      });
+    });
+  });
+  return entries;
+}
+
+function uid() { return "g" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function fmtDate(ts) { return new Date(ts).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }); }
+
+function loadState() {
+  try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) state = JSON.parse(raw); }
+  catch (e) { state = { groups: [] }; }
+  render();
+}
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch (e) { showToast("Speichern fehlgeschlagen"); }
+}
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 1800);
+}
+function findGroup(id) { return state.groups.find((g) => g.id === id); }
+
+function addGroup() {
+  const input = document.getElementById("newGroupName");
+  const name = input.value.trim();
+  if (!name) return;
+  state.groups.push({ id: uid(), name, history: [] });
+  input.value = "";
+  saveState(); render();
+  showToast("„" + name + "“ angelegt");
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function togglePanel(groupId, panel) {
+  openPanels[groupId] = openPanels[groupId] === panel ? null : panel;
+  if (openPanels[groupId] === "neu" && !draft[groupId]) draft[groupId] = defaultDraft();
+  render();
+}
+
+function toggleBlock(groupId, letter) {
+  const d = draft[groupId];
+  if (d.blocks.has(letter)) d.blocks.delete(letter); else d.blocks.add(letter);
+  render();
+}
+
+function drawQuestions(groupId) {
+  const d = draft[groupId];
+  if (d.blocks.size === 0) { showToast("Wähle mindestens einen Block aus"); return; }
+  const drawn = {};
+  d.blocks.forEach((letter) => {
+    const pool = QUESTIONS[letter];
+    drawn[letter] = {
+      afb1: shuffle(pool.afb1).slice(0, Math.min(d.counts.afb1, pool.afb1.length)),
+      afb2: shuffle(pool.afb2).slice(0, Math.min(d.counts.afb2, pool.afb2.length)),
+      afb3: shuffle(pool.afb3).slice(0, Math.min(d.counts.afb3, pool.afb3.length)),
+      ki1: shuffle(pool.ki1).slice(0, Math.min(d.kiCounts.ki1, pool.ki1.length)),
+      ki2: shuffle(pool.ki2).slice(0, Math.min(d.kiCounts.ki2, pool.ki2.length)),
+      ki3: shuffle(pool.ki3).slice(0, Math.min(d.kiCounts.ki3, pool.ki3.length)),
+    };
+  });
+  d.drawn = drawn;
+  d.ratings = {};
+  render();
+}
+
+function setRating(groupId, key, value) { draft[groupId].ratings[key] = value; render(); }
+
+function finishExam(groupId) {
+  const g = findGroup(groupId);
+  const d = draft[groupId];
+  if (!d || !d.drawn) return;
+  const entries = [];
+  Object.entries(d.drawn).forEach(([letter, afbSets]) => {
+    ALL_AFB.forEach((afb) => {
+      (afbSets[afb] || []).forEach((q, i) => {
+        const key = letter + "-" + afb + "-" + i;
+        entries.push({ block: letter, afb, question: q, rating: d.ratings[key] || null });
+      });
+    });
+  });
+  g.history.unshift({ ts: Date.now(), blocks: [...d.blocks], entries });
+  draft[groupId] = defaultDraft();
+  openPanels[groupId] = null;
+  saveState(); render();
+  showToast("Prüfung für " + g.name + " gespeichert");
+}
+
+let deleteArmed = {};
+function deleteGroup(groupId) {
+  if (!deleteArmed[groupId]) {
+    deleteArmed[groupId] = true; render();
+    setTimeout(() => { deleteArmed[groupId] = false; render(); }, 3000);
+    return;
+  }
+  state.groups = state.groups.filter((g) => g.id !== groupId);
+  saveState(); render();
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "Pruefungstool_Tierwelt_Backup_" + new Date().toISOString().slice(0, 10) + ".json";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("Backup heruntergeladen");
+}
+function importData(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!imported || !Array.isArray(imported.groups)) throw new Error("invalid");
+      state = imported; saveState(); render();
+      showToast("Daten importiert");
+    } catch (err) { showToast("Import fehlgeschlagen – ungültige Datei"); }
+  };
+  reader.readAsText(file);
+}
+
+// ============================== RENDER ==============================
+
+function afbClass(afb) { return IS_KI[afb] ? "ki" : afb; }
+
+function renderNeuPanel(g) {
+  const d = draft[g.id];
+  let html = '<div class="panel"><h4>Neue Prüfung – Blöcke auswählen</h4><div class="block-grid">';
+  Object.entries(BLOCKS_META).forEach(([letter, meta]) => {
+    const checked = d.blocks.has(letter) ? "checked" : "";
+    html += '<label class="block-check ' + (meta.pflicht ? "pflicht" : "") + '">' +
+      '<input type="checkbox" ' + checked + ' onchange="toggleBlock(\'' + g.id + '\',\'' + letter + '\')"> ' + letter + ' – ' + meta.title + '</label>';
+  });
+  html += '</div>' +
+    '<div class="num-row">Fachfragen pro Block: ' +
+      'AFB I <input type="number" min="0" max="8" value="' + d.counts.afb1 + '" onchange="draft[\'' + g.id + '\'].counts.afb1=parseInt(this.value||0,10)"> ' +
+      'AFB II <input type="number" min="0" max="6" value="' + d.counts.afb2 + '" onchange="draft[\'' + g.id + '\'].counts.afb2=parseInt(this.value||0,10)"> ' +
+      'AFB III <input type="number" min="0" max="3" value="' + d.counts.afb3 + '" onchange="draft[\'' + g.id + '\'].counts.afb3=parseInt(this.value||0,10)">' +
+    '</div>' +
+    '<div class="num-row ki-row"><strong>KI-Fragen pro Block:</strong> ' +
+      'AFB I <input type="number" min="0" max="3" value="' + d.kiCounts.ki1 + '" onchange="draft[\'' + g.id + '\'].kiCounts.ki1=parseInt(this.value||0,10)"> ' +
+      'AFB II <input type="number" min="0" max="3" value="' + d.kiCounts.ki2 + '" onchange="draft[\'' + g.id + '\'].kiCounts.ki2=parseInt(this.value||0,10)"> ' +
+      'AFB III <input type="number" min="0" max="3" value="' + d.kiCounts.ki3 + '" onchange="draft[\'' + g.id + '\'].kiCounts.ki3=parseInt(this.value||0,10)">' +
+    '</div>' +
+    '<div style="margin:0.7rem 0;"><button class="btn-primary" onclick="drawQuestions(\'' + g.id + '\')">Fragen auslosen</button> ' +
+    (d.drawn ? '<button class="btn-ghost btn-small" onclick="drawQuestions(\'' + g.id + '\')">Neu mischen</button>' : "") +
+    '</div>';
+
+  if (d.drawn) {
+    Object.entries(d.drawn).forEach(([letter, afbSets]) => {
+      html += '<div class="block-heading">Block ' + letter + ' – ' + BLOCKS_META[letter].title + '</div>';
+      const hasFach = FACH_AFB.some((a) => (afbSets[a] || []).length);
+      const hasKi = KI_AFB.some((a) => (afbSets[a] || []).length);
+      if (hasFach) {
+        html += '<div class="sub-heading fach">Inhaltliche Fragen</div>';
+        FACH_AFB.forEach((afb) => {
+          (afbSets[afb] || []).forEach((q, i) => { html += renderQBox(g.id, d, letter, afb, q, i); });
+        });
+      }
+      if (hasKi) {
+        html += '<div class="sub-heading ki">KI-Kompetenz-Fragen</div>';
+        KI_AFB.forEach((afb) => {
+          (afbSets[afb] || []).forEach((q, i) => { html += renderQBox(g.id, d, letter, afb, q, i); });
+        });
+      }
+    });
+    html += '<div style="margin-top:1rem;"><button class="btn-primary" onclick="finishExam(\'' + g.id + '\')">Prüfung abschließen &amp; speichern</button></div>';
+  }
+  html += renderAuswertung(currentDraftEntries(g.id));
+  html += '</div>';
+  return html;
+}
+
+function renderQBox(gid, d, letter, afb, q, i) {
+  const key = letter + "-" + afb + "-" + i;
+  const current = d.ratings[key];
+  return '<div class="qbox ' + afbClass(afb) + '">' +
+    '<div class="qlabel">' + AFB_LABEL[afb] + '</div>' +
+    '<div class="qtext">' + q + '</div>' +
+    '<div class="rating">' + RATINGS.map((r) => '<button class="' + (current === r ? "active" : "") + '" onclick="setRating(\'' + gid + '\',\'' + key + '\',\'' + r + '\')">' + r + '</button>').join("") + '</div>' +
+    '</div>';
+}
+
+function renderVerlaufPanel(g) {
+  if (!g.history.length) return '<div class="panel"><div class="hist-empty">Noch keine Prüfung gespeichert.</div></div>';
+  let html = '<div class="panel"><h4>Verlauf</h4>';
+  g.history.forEach((h, idx) => {
+    html += '<details style="margin-bottom:0.6rem;">' +
+      '<summary>' + fmtDate(h.ts) + ' – Blöcke: ' + h.blocks.join(", ") + ' (' + h.entries.length + ' Fragen)</summary>' +
+      '<div style="margin:0.5rem 0;"><button class="btn-ghost btn-small" onclick="exportExamPdf(\'' + g.id + '\', ' + idx + ')">Als PDF exportieren</button></div>' +
+      '<table class="history"><tr><th>Block</th><th>AFB</th><th>Frage</th><th>Bewertung</th></tr>' +
+      h.entries.map((e) => '<tr><td>' + e.block + '</td><td>' + AFB_LABEL[e.afb] + '</td><td>' + e.question + '</td><td>' + (e.rating || "–") + '</td></tr>').join("") +
+      '</table>' + renderAuswertung(h.entries) + '</details>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function exportExamPdf(groupId, examIndex) {
+  const g = findGroup(groupId);
+  if (!g || !g.history[examIndex]) return;
+  const h = g.history[examIndex];
+
+  const rated = h.entries.filter((e) => e.rating);
+  const counts = { "++": 0, "+": 0, "0": 0, "-": 0, "--": 0 };
+  rated.forEach((e) => counts[e.rating]++);
+  let avgBlock = "";
+  if (rated.length) {
+    const avg = rated.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / rated.length;
+    const afbGroups = { afb1: [], afb2: [], afb3: [] };
+    rated.forEach((e) => afbGroups[AFB_GROUP[e.afb]].push(e));
+    const afbLabels = { afb1: "AFB I", afb2: "AFB II", afb3: "AFB III" };
+    let afbRows = "";
+    Object.entries(afbGroups).forEach(([afb, list]) => {
+      if (!list.length) return;
+      const a = list.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / list.length;
+      afbRows += "<tr><td>" + afbLabels[afb] + "</td><td>" + list.length + "</td><td>" + a.toFixed(1) + " (" + gradeSuggestion(a) + ")</td></tr>";
+    });
+    const kiRated = rated.filter((e) => IS_KI[e.afb]);
+    let kiRow = "";
+    if (kiRated.length) {
+      const ka = kiRated.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / kiRated.length;
+      kiRow = "<tr><td>davon KI-Kompetenz</td><td>" + kiRated.length + "</td><td>" + ka.toFixed(1) + " (" + gradeSuggestion(ka) + ")</td></tr>";
+    }
+    avgBlock =
+      "<h2>Auswertung</h2><p>Bewertete Fragen: <strong>" + rated.length + "</strong> von " + h.entries.length + "<br>" +
+      "Verteilung: ++ " + counts["++"] + " | + " + counts["+"] + " | 0 " + counts["0"] + " | - " + counts["-"] + " | -- " + counts["--"] + "<br>" +
+      "Gesamtdurchschnitt: <strong>" + avg.toFixed(2) + "</strong> &rarr; Notenvorschlag: <strong>" + gradeSuggestion(avg) + "</strong></p>" +
+      "<table class='tbl'><tr><th>Bereich</th><th>Fragen</th><th>&Oslash; / Vorschlag</th></tr>" + afbRows + kiRow + "</table>" +
+      "<p class='disc'>Rechnerischer Vorschlag auf Basis der Ampel-Bewertungen. Ersetzt nicht die fachliche Einschätzung der Lehrkraft. Die Reihennote setzt sich laut Masterdokument (Abschnitt 5) aus Portfolio, KI-Dokumentation, Prüfungsgespräch und Mitarbeit zusammen.</p>";
+  }
+
+  const rows = h.entries.map((e) =>
+    "<tr><td>" + e.block + "</td><td>" + AFB_LABEL[e.afb] + "</td><td>" + e.question + "</td><td class='rat'>" + (e.rating || "–") + "</td></tr>"
+  ).join("");
+
+  const win = window.open("", "_blank");
+  if (!win) { showToast("Bitte Pop-ups für diese Seite erlauben"); return; }
+  win.document.write('<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Pruefungsprotokoll ' + g.name + '</title>' +
+    '<style>body{font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;margin:2rem;line-height:1.5;}' +
+    'h1{color:#0D1B2A;font-size:1.4rem;margin-bottom:0.2rem;}h2{color:#0D1B2A;font-size:1.1rem;margin-top:1.5rem;border-bottom:1px solid #ccc;padding-bottom:0.2rem;}' +
+    '.meta{color:#555;font-size:0.9rem;margin-bottom:1rem;}table{width:100%;border-collapse:collapse;margin-top:0.5rem;font-size:0.9rem;}' +
+    'th,td{border:1px solid #ccc;padding:0.4rem 0.5rem;text-align:left;vertical-align:top;}th{background:#37474F;color:#fff;font-size:0.82rem;}' +
+    '.rat{text-align:center;font-weight:bold;width:60px;}.tbl td:first-child{font-weight:bold;}.disc{font-size:0.75rem;color:#666;font-style:italic;margin-top:0.8rem;}' +
+    '.sign{margin-top:2.5rem;display:flex;gap:3rem;}.sign div{border-top:1px solid #333;padding-top:0.3rem;font-size:0.85rem;flex:1;}' +
+    '@media print{body{margin:1.5cm;}.noprint{display:none;}}.btn{background:#0D1B2A;color:#fff;border:none;padding:0.6rem 1.2rem;border-radius:6px;font-size:0.9rem;cursor:pointer;margin-bottom:1rem;}</style></head><body>' +
+    '<button class="btn noprint" onclick="window.print()">Als PDF speichern / drucken</button>' +
+    '<h1>Pr&uuml;fungsprotokoll &ndash; ' + g.name + '</h1>' +
+    '<div class="meta">WPK Naturwissenschaften &middot; Einheit 2: Tierwelt Afrikas<br>Datum der Pr&uuml;fung: ' + fmtDate(h.ts) + ' &middot; Gepr&uuml;fte Bl&ouml;cke: ' + h.blocks.join(", ") + '</div>' +
+    '<h2>Fragen und Bewertungen</h2><table><tr><th>Block</th><th>AFB</th><th>Frage</th><th>Bewertung</th></tr>' + rows + '</table>' +
+    avgBlock +
+    '<div class="sign"><div>Datum, Unterschrift Lehrkraft</div><div>Bemerkungen</div></div></body></html>');
+  win.document.close();
+}
+
+function render() {
+  const list = document.getElementById("groupList");
+  if (!state.groups.length) {
+    list.innerHTML = '<div class="empty">Noch keine Gruppen angelegt. Fügt oben eure erste Gruppe hinzu.</div>';
+    return;
+  }
+  const sorted = [...state.groups].sort((a, b) => a.name.localeCompare(b.name, "de"));
+  list.innerHTML = sorted.map((g) => {
+    const open = openPanels[g.id];
+    let panelHtml = "";
+    if (open === "neu") panelHtml = renderNeuPanel(g);
+    else if (open === "verlauf") panelHtml = renderVerlaufPanel(g);
+    return '<div class="card"><div class="card-head"><span class="card-name">' + g.name + '</span></div>' +
+      '<div class="card-actions">' +
+      '<button class="btn-primary btn-small" onclick="togglePanel(\'' + g.id + '\',\'neu\')">Neue Prüfung</button> ' +
+      '<button class="btn-ghost btn-small" onclick="togglePanel(\'' + g.id + '\',\'verlauf\')">Verlauf (' + g.history.length + ')</button> ' +
+      '<button class="btn-ghost btn-small" onclick="deleteGroup(\'' + g.id + '\')">' + (deleteArmed[g.id] ? "Wirklich löschen?" : "Löschen") + '</button>' +
+      '</div>' + panelHtml + '</div>';
+  }).join("");
+}
+
+document.getElementById("addGroupBtn").addEventListener("click", addGroup);
+document.getElementById("newGroupName").addEventListener("keydown", (e) => { if (e.key === "Enter") addGroup(); });
+document.getElementById("exportBtn").addEventListener("click", exportData);
+document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change", (e) => {
+  if (e.target.files && e.target.files[0]) importData(e.target.files[0]);
+  e.target.value = "";
+});
+
+loadState();
+</script>
+</body>
+</html>
