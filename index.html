@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prüfungsfragen-Auswahltool – Tierwelt Afrikas</title>
+<title>Prüfungsfragen-Auswahltool – Klimawandel</title>
 <style>
   :root {
     --ink: #1a1a1a; --muted: #6b7280; --bg: #f4f6f8; --card: #ffffff; --line: #e2e6ea; --navy: #0D1B2A;
     --afb1-b: #1A3A5C; --afb1-f: #E3F0FC;
     --afb2-b: #2E7D32; --afb2-f: #F1F8F1;
     --afb3-b: #E65100; --afb3-f: #FFF8F0;
-    --ki-b: #7B1FA2; --ki-f: #F3E5F5;
   }
   * { box-sizing: border-box; }
   body { font-family: -apple-system, "Segoe UI", Arial, Helvetica, sans-serif; background: var(--bg); color: var(--ink); margin: 0; padding: 1.5rem 1rem 4rem; }
@@ -36,26 +35,19 @@
   .block-check.pflicht { border-color: #1A3A5C; background: #E3F0FC; }
   .num-row { display: flex; align-items: center; gap: 0.6rem; margin: 0.5rem 0; font-size: 0.87rem; flex-wrap: wrap; }
   .num-row input { width: 50px; padding: 0.35rem 0.5rem; border: 1px solid var(--line); border-radius: 7px; text-align: center; font-family: inherit; }
-  .num-row.ki-row { padding: 0.5rem 0.7rem; background: var(--ki-f); border: 1px solid var(--ki-b); border-radius: 8px; }
-  .num-row.ki-row strong { color: var(--ki-b); }
   .qbox { border-radius: 8px; padding: 0.7rem 0.9rem; margin-bottom: 0.6rem; border-left: 5px solid; }
   .qbox.afb1 { background: var(--afb1-f); border-color: var(--afb1-b); }
   .qbox.afb2 { background: var(--afb2-f); border-color: var(--afb2-b); }
   .qbox.afb3 { background: var(--afb3-f); border-color: var(--afb3-b); }
-  .qbox.ki { background: var(--ki-f); border-color: var(--ki-b); }
   .qbox .qlabel { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.25rem; }
   .qbox.afb1 .qlabel { color: var(--afb1-b); }
   .qbox.afb2 .qlabel { color: var(--afb2-b); }
   .qbox.afb3 .qlabel { color: var(--afb3-b); }
-  .qbox.ki .qlabel { color: var(--ki-b); }
   .qbox .qtext { font-size: 0.92rem; margin-bottom: 0.5rem; }
   .rating { display: flex; gap: 0.3rem; flex-wrap: wrap; }
   .rating button { padding: 0.3rem 0.6rem; font-size: 0.78rem; background: #fff; border: 1px solid var(--line); color: var(--muted); }
   .rating button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
   .block-heading { font-weight: 700; color: var(--navy); margin: 1rem 0 0.5rem; font-size: 0.95rem; }
-  .sub-heading { font-weight: 700; font-size: 0.8rem; margin: 0.8rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.03em; }
-  .sub-heading.fach { color: var(--navy); }
-  .sub-heading.ki { color: var(--ki-b); }
   table.history { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
   table.history th, table.history td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--line); vertical-align: top; }
   table.history th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; }
@@ -77,13 +69,33 @@
   .afb-breakdown { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.6rem; font-size: 0.8rem; }
   .afb-breakdown span.tag { padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 700; font-size: 0.72rem; margin-right: 0.3rem; }
   .disclaimer { font-size: 0.75rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
+  :root { --ki-b: #7B1FA2; --ki-f: #F3E5F5; }
+  .qbox.ki { background: var(--ki-f); border-color: var(--ki-b); }
+  .qbox.ki .qlabel { color: var(--ki-b); }
+  .qhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+  .swap { background: transparent; color: var(--muted); border: 1px solid var(--line); padding: 0.2rem 0.5rem; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
+  .swap:hover { background: #fff; color: var(--navy); }
+  details.loesung { margin: 0.2rem 0 0.55rem; }
+  details.loesung summary { font-size: 0.8rem; font-weight: 600; color: var(--navy); }
+  details.loesung ul { margin: 0.35rem 0 0.2rem; padding-left: 1.2rem; font-size: 0.85rem; background: rgba(255,255,255,0.7); border-radius: 6px; padding-top: 0.4rem; padding-bottom: 0.4rem; }
+  details.loesung li { margin-bottom: 0.15rem; }
+  .section { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 0.8rem 0.9rem; margin-bottom: 0.8rem; }
+  .section-title { font-size: 0.82rem; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.5rem; }
+  .block-check.fixed { opacity: 0.85; }
+  .presets { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+  .presets button { background: #eef1f4; color: var(--navy); border: 1px solid transparent; }
+  .presets button.active { background: var(--navy); color: #fff; }
+  .calc { font-size: 0.85rem; color: var(--navy); margin-top: 0.3rem; }
+  .calc.warn { color: #C62828; font-weight: 600; }
+  .hint { font-size: 0.8rem; color: var(--muted); margin: 0.3rem 0 0; }
+  .afb-heading { font-weight: 700; margin: 1.1rem 0 0.5rem; font-size: 0.92rem; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="page">
     <h1>Prüfungsfragen-Auswahltool</h1>
-    <p>WPK Naturwissenschaften · Einheit 2: Tierwelt Afrikas · mündliches Prüfungsgespräch</p>
+    <p>WPK Naturwissenschaften · Einheit 1: Klimawandel und Klimaschutz · mündliches Prüfungsgespräch · 20 Fachfragen + 3 KI-Fragen</p>
   </header>
 
   <div class="addbar">
@@ -102,427 +114,527 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const BLOCKS_META = {
-  A: { title: "Afrikas Lebensräume und Klimazonen", pflicht: true },
-  B: { title: "Angepasstheiten – Leben in extremen Lebensräumen", pflicht: true },
-  C: { title: "Nahrungsnetze und Ökosystemgleichgewicht", pflicht: true },
-  D: { title: "Große Säugetiere – Elefant, Löwe, Leopard", pflicht: false },
-  E: { title: "Vögel Afrikas", pflicht: false },
-  F: { title: "Reptilien, Amphibien und Insekten", pflicht: false },
-  G: { title: "Meeresküsten und Korallenriffe", pflicht: false },
-  H: { title: "Wilderei und illegaler Tierhandel", pflicht: false },
-  I: { title: "Klimawandel und Tierwelt", pflicht: false },
-  J: { title: "Naturschutz, Schutzgebiete und Kolonialgeschichte", pflicht: false },
-  K: { title: "Ökotourismus – Chancen und Konflikte", pflicht: false },
-  L: { title: "Mensch-Tier-Konflikte und Koexistenz", pflicht: false },
-};
 
 const QUESTIONS = {
   A: {
     afb1: [
-      "Nenne die fünf wichtigsten Lebensraumtypen Afrikas.",
-      "Nenne drei Klimazonen, die in Afrika vorkommen.",
-      "Beschreibe, was den tropischen Regenwald klimatisch kennzeichnet.",
-      "Nenne die größte Heißwüste der Welt und ihren ungefähren Flächenumfang.",
-      "Beschreibe, wodurch sich Feucht- und Trockensavanne unterscheiden.",
-      "Nenne zwei Tierarten, die typisch für die ostafrikanische Savanne sind.",
-      "Beschreibe, warum der Kilimandscharo trotz Äquatornähe Schnee trägt.",
+      { q: "Nenne die drei Hauptbestandteile der Erdatmosphäre nach Anteil.", l: ["Stickstoff: ca. 78 %", "Sauerstoff: ca. 21 %", "Spurengase (u. a. CO₂, CH₄, N₂O, Wasserdampf): zusammen unter 1 %"] },
+      { q: "Nenne mindestens drei Treibhausgase.", l: ["Kohlenstoffdioxid (CO₂)", "Methan (CH₄)", "Lachgas (N₂O)", "Wasserdampf; laut Abb. 1 außerdem SF₆"] },
+      { q: "Beschreibe den Unterschied zwischen kurzwelliger und langwelliger Strahlung.", l: ["Kurzwellig: Sonnenstrahlung (sichtbares Licht, UV), passiert die Atmosphäre weitgehend", "Langwellig: Infrarot-/Wärmestrahlung, die die erwärmte Erde abgibt", "Treibhausgase absorbieren vor allem die langwellige Strahlung"] },
+      { q: "Nenne die ungefähre Durchschnittstemperatur der Erde mit und ohne natürlichen Treibhauseffekt.", l: ["Mit: ca. +15 °C", "Ohne: ca. −18 °C", "Differenz: rund 33 Grad"] },
+      { q: "Beschreibe, was der Eis-Albedo-Effekt ist.", l: ["Helles Eis reflektiert bis zu 90 % der Sonnenstrahlung, dunkles Meer absorbiert bis zu 94 %", "Schmilzt Eis, wird mehr Energie absorbiert → Erwärmung → weitere Schmelze", "Selbstverstärkender Kreislauf (positive Rückkopplung), besonders in der Arktis"] },
+      { q: "Nenne die beiden Gase mit den höchsten GWP-Werten aus Abbildung 1.", l: ["SF₆ (Schwefelhexafluorid): GWP ca. 25.200", "N₂O (Lachgas): GWP 273"] },
+      { q: "Beschreibe, was ein Klimakipppunkt ist.", l: ["Schwellenwert im Klimasystem", "Wird er überschritten, wird eine Veränderung selbstverstärkend", "Danach praktisch nicht mehr aufhaltbar, auch wenn Emissionen sinken"] },
+      { q: "Nenne, wer den Treibhauseffekt 1896 erstmals rechnerisch beschrieb.", l: ["Svante Arrhenius, schwedischer Chemiker", "Berechnete von Hand die Erwärmung bei CO₂-Verdopplung (mehrere Grad)"] },
     ],
     afb2: [
-      "Erkläre, warum in Afrika direkt nebeneinander Wüste und Regenwald entstehen können.",
-      "Erkläre den Einfluss des Benguela-Stroms auf die Namib-Wüste.",
-      "Werte ein Klimadiagramm einer Savanne nach dem 7-Schritte-Schema aus.",
-      "Vergleiche Regenwald und Savanne hinsichtlich Niederschlag und Artenvielfalt.",
-      "Erkläre den Zusammenhang zwischen geografischer Lage und Lebensraumtyp.",
+      { q: "Erkläre den Unterschied zwischen dem natürlichen und dem anthropogenen Treibhauseffekt.", l: ["Natürlich: durch natürlich vorhandene Treibhausgase, hebt die Temperatur von −18 °C auf +15 °C, lebensnotwendig", "Anthropogen: zusätzlicher Effekt durch vom Menschen ausgestoßene Treibhausgase", "Beleg: CO₂ von ca. 295 ppm (1896) auf über 424 ppm gestiegen (+40 %)"] },
+      { q: "Erkläre, warum beim GWP-Vergleich eine logarithmische Skala verwendet wird.", l: ["Werte reichen von 1 (CO₂) bis ca. 25.200 (SF₆)", "Auf linearer Skala wären CO₂ und CH₄ praktisch unsichtbar", "Jede Hauptlinie bedeutet ×10 → Achtung beim Ablesen (7-Schritte-Schema, Schritt 3)"] },
+      { q: "Vergleiche den Eis-Albedo-Effekt mit einem anderen Rückkopplungsmechanismus.", l: ["Eis-Albedo: Schmelze → weniger Reflexion → mehr Erwärmung", "Permafrost: Auftauen → Mikroorganismen setzen Methan frei → mehr Erwärmung", "Gemeinsam: beides positive Rückkopplungen, die sich selbst verstärken", "Unterschied: physikalischer Strahlungseffekt vs. zusätzliche Treibhausgase"] },
+      { q: "Erkläre, warum sich die Arktis schneller erwärmt als der globale Durchschnitt.", l: ["Dort verschwindet besonders viel Eisfläche", "Eis-Albedo-Effekt verstärkt die Erwärmung vor Ort", "Studie Rantanen et al. 2022: fast viermal so schnell wie der globale Durchschnitt"] },
+      { q: "Begründe, warum eine positive Rückkopplung im Klimasystem besonders gefährlich ist.", l: ["Die Wirkung verstärkt ihre eigene Ursache (Mikrofon-Lautsprecher-Analogie)", "Veränderungen beschleunigen sich selbst", "Kann zu Kipppunkten führen, ab denen die Entwicklung nicht mehr aufhaltbar ist"] },
+      { q: "Erkläre den Zusammenhang zwischen auftauendem Permafrost und Methan-Freisetzung.", l: ["Im Permafrost lagern ca. 1.500 Mrd. t organischer Kohlenstoff (fast doppelt so viel wie in der Atmosphäre)", "Beim Auftauen bauen Mikroorganismen das Material ab und setzen Methan frei", "Methan wirkt stark als Treibhausgas → weitere Erwärmung → weiteres Auftauen"] },
     ],
     afb3: [
-      "Beurteile, warum die geografische Lage ein besserer Erklärungsansatz für die Tierwelt ist als das Aufzählen einzelner Arten.",
-      "Bewerte, wie verlässlich Klimadaten die Einteilung Afrikas in Lebensräume begründen.",
-    ],
-    ki1: [
-      "Nenne den Unterschied zwischen einem allgemeinen Prompt und einem Perspektiven-Prompt.",
-      "Beschreibe, was mit „Multiperspektivität“ (KI-Level 3) gemeint ist.",
-      "Nenne einen Grund, warum eine KI-Antwort zu Afrikas Savanne eine bestimmte Perspektive bevorzugen kann.",
-    ],
-    ki2: [
-      "Erkläre am Beispiel der Savanne, wie sich eine KI-Antwort verändert, wenn man nach der Sicht einer Massai-Hirtenfamilie fragt.",
-      "Erkläre, warum es sinnvoll ist, KI-Ergebnisse zu Lebensräumen mit einer seriösen Quelle abzugleichen.",
-    ],
-    ki3: [
-      "Beurteile, wessen Perspektive in einer allgemeinen KI-Beschreibung der Savanne zuerst fehlt – und warum.",
+      { q: "Beurteile, warum die Forschungsnotiz zur Arktis-Erwärmung als verlässliche Quelle gelten kann.", l: ["Veröffentlicht in einer Fachzeitschrift (Communications Earth & Environment) → Peer Review", "Auswertung von Messdaten seit 1979, benanntes Forschungsteam", "Ergebnis passt zu anderen Befunden (Abb. 2, Eis-Albedo-Effekt)", "Kritisch: Zusammenfassung, nicht Originalstudie; eine einzelne Studie"] },
+      { q: "Bewerte, welche Konsequenzen das Überschreiten von Klimakipppunkten für künftige Generationen hätte.", l: ["Veränderungen wären unumkehrbar, auch bei späterer Emissionsreduktion", "Mögliche Folgen: Meeresspiegelanstieg (Eisschilde), zusätzliche Treibhausgase (Permafrost)", "Heutige Entscheidungen legen Lebensbedingungen künftiger Generationen fest", "Bewertungskriterien: Gerechtigkeit, Handlungsspielraum, Vorsorge"] },
+      { q: "Beurteile, ob die Venus (sehr dichte CO₂-Atmosphäre, Oberflächentemperatur rund 460 °C) als Beleg für die Wirkung von Treibhausgasen dienen kann.", l: ["Transfer: Prinzip Treibhauseffekt auf einen anderen Planeten übertragen", "Pro: extrem viel CO₂ → extreme Erwärmung, obwohl dichte Wolken viel Sonnenlicht reflektieren", "Einschränkung: andere Bedingungen (Sonnenabstand, Atmosphärendruck) → kein direkter Vergleich mit der Erde", "Fazit: anschauliches Extrembeispiel, kein Beweis für den heutigen Klimawandel"] },
     ],
   },
   B: {
     afb1: [
-      "Nenne je ein Beispiel für eine morphologische, physiologische und Verhaltensangepasstheit.",
-      "Beschreibe, wie der Elefant über seine Ohren die Körpertemperatur reguliert.",
-      "Nenne die wichtigste Angepasstheit des Dromedars an das Wüstenleben.",
-      "Beschreibe, wozu die Giraffe ihren langen Hals nutzt.",
-      "Nenne die Höchstgeschwindigkeit des Geparden und ein Merkmal, das sie ermöglicht.",
-      "Beschreibe, was im Höcker eines Kamels gespeichert wird.",
+      { q: "Nenne mindestens drei unabhängige Datenquellen zum Nachweis der Erderwärmung.", l: ["Satellitenmessungen, Wetterstationen", "Eisbohrkerne, Baumringe, Korallen", "Meerestemperaturen, Gletscherbeobachtungen"] },
+      { q: "Nenne den ungefähren CO₂-Wert der Atmosphäre für 1958 und für 2024.", l: ["1958: ca. 315 ppm", "2024: ca. 424,6 ppm", "Höchster Wert seit mindestens 800.000 Jahren"] },
+      { q: "Beschreibe, wo und seit wann die Keeling-Kurve gemessen wird.", l: ["Auf dem Vulkan Mauna Loa, Hawaii, 3.400 m hoch", "Seit 1958", "Standort fern von Städten, Wäldern und Industrie → unverfälschte Messwerte"] },
+      { q: "Nenne das Gründungsjahr des IPCC.", l: ["1988, gegründet von den Vereinten Nationen", "Aufgabe: wertet regelmäßig die gesamte Klimaforschung aus"] },
+      { q: "Beschreibe das Zickzack-Muster der Keeling-Kurve.", l: ["Jährliche Schwankung im Rhythmus der Jahreszeiten", "Vegetation der Nordhalbkugel nimmt im Frühling/Sommer CO₂ auf, gibt es im Herbst/Winter ab", "Liegt über einem stetig steigenden Langzeittrend („die Erde atmet“)"] },
+      { q: "Nenne die beiden Kohlenstoff-Isotope, die bei der Isotopenanalyse eine Rolle spielen.", l: ["C-13 (schweres, stabiles Isotop)", "C-14 (radioaktives Isotop)"] },
+      { q: "Nenne den Namen des Begründers der Keeling-Kurve.", l: ["Charles David Keeling, Geochemiker", "Heute leitet sein Sohn Ralph Keeling das Messprogramm"] },
+      { q: "Nenne, um wie viel Grad die globale Durchschnittstemperatur seit 1850 gestiegen ist.", l: ["Um ca. 1,1 bis 1,2 °C", "Vergleich: Letzte Eiszeit war global nur ca. 4–5 °C kälter als heute"] },
     ],
     afb2: [
-      "Erkläre, warum eine Angepasstheit immer nur auf einen bestimmten Lebensraum bezogen ist.",
-      "Erkläre die Angepasstheiten des Geparden an das schnelle Jagen.",
-      "Vergleiche die Angepasstheiten eines Savannen- und eines Wüstentieres.",
-      "Erkläre, warum eine starke Spezialisierung auch ein Nachteil sein kann.",
-      "Begründe, warum das große Herz der Giraffe eine Folge ihres Körperbaus ist.",
+      { q: "Erkläre, warum der IPCC als besonders verlässliche Quelle gilt.", l: ["Wertet Tausende begutachtete Studien aus, statt eigene Einzelstudien zu erstellen", "Hunderte Wissenschaftler*innen aus aller Welt beteiligt", "Ergebnis: Sachstandsberichte, z. B. AR6 (2021/22): menschlicher Einfluss eindeutig"] },
+      { q: "Erkläre, wie die Isotopenanalyse beweist, dass der CO₂-Anstieg vom Menschen stammt.", l: ["CO₂ aus fossilen Brennstoffen enthält wenig C-13 und praktisch kein C-14 (C-14 längst zerfallen)", "Genau diese Veränderung der Isotopenzusammensetzung wird in der Atmosphäre gemessen", "Vulkane oder Ozeane hätten einen anderen „Fingerabdruck“ → Quelle eindeutig fossil"] },
+      { q: "Werte den Verlauf der Keeling-Kurve (Abbildung 3) nach dem 7-Schritte-Schema aus.", l: ["Titel/Achsen: CO₂-Konzentration in ppm, Mauna Loa 1958–2025", "Maßstab: y-Achse beginnt nicht bei null (ca. 310 ppm) → Anstieg wirkt steiler", "Verlauf: stetiger, sich beschleunigender Anstieg von ca. 315 auf ca. 425 ppm, überlagert von Jahresschwankung", "Schluss + Quelle: dauerhafter Anstieg; Scripps/NOAA = seriöse Messinstitute"] },
+      { q: "Vergleiche die Aussage der Pressemitteilung mit den Daten der Keeling-Kurve.", l: ["Pressemitteilung: Mai 2025 erstmals über 430 ppm (saisonaler Höchststand)", "Abb. 3 zeigt Jahresmittelwerte (2024: 424,6 ppm) → Jahresmittel liegt unter dem Maihöchstwert", "Beide belegen denselben Trend: jedes Jahr ein neuer Rekord"] },
+      { q: "Erkläre, warum die Kombination vieler unabhängiger Messreihen überzeugender ist als eine einzelne Studie.", l: ["Einzelne Messreihe kann Mess- oder Methodenfehler enthalten", "Unabhängige Methoden (Satellit, Eis, Baumringe …) kommen zum selben Ergebnis", "Kriminalfall-Analogie: zehn unabhängige Zeugen mit derselben Aussage"] },
+      { q: "Begründe, warum die Isotopenanalyse mit der Radiokarbondatierung verwandt ist.", l: ["Beide nutzen den radioaktiven Zerfall von C-14", "Radiokarbondatierung: Alter aus dem verbliebenen C-14-Anteil", "Fossile Brennstoffe sind so alt, dass kein C-14 mehr vorhanden ist → gleiches Prinzip"] },
     ],
     afb3: [
-      "Beurteile, ob eine hoch spezialisierte Art wie der Gepard im Vorteil oder Nachteil ist, wenn sich ihr Lebensraum schnell verändert.",
-      "Bewerte, warum der Irrtum um den Kamelhöcker ein gutes Beispiel für die Selbstkorrektur der Wissenschaft ist.",
-    ],
-    ki1: [
-      "Nenne eine Frage, mit der man eine KI zum Perspektivenwechsel bei Tierwissen auffordert.",
-      "Beschreibe, was mit „lokalem Wissenssystem“ gemeint ist.",
-      "Nenne einen Grund, warum lokales Wissen in KI-Antworten oft fehlt.",
-    ],
-    ki2: [
-      "Erkläre, wie sich eine KI-Antwort zum Elefantenverhalten verändert, wenn man nach dem Wissen ostafrikanischer Gemeinschaften fragt.",
-      "Erkläre, warum westlich geprägtes Wissen in KI-Systemen häufig überrepräsentiert ist.",
-    ],
-    ki3: [
-      "Beurteile, was es für die Verlässlichkeit einer KI-Antwort bedeutet, wenn lokale Wissenssysteme systematisch fehlen.",
+      { q: "Beurteile, warum eine einzelne Messreihe nicht ausreicht, um den menschengemachten Klimawandel zu belegen.", l: ["Eine Reihe zeigt nur einen Aspekt (z. B. CO₂-Anstieg), nicht die Ursache", "Mess- oder Standortfehler wären nicht ausgeschlossen", "Erst die Übereinstimmung unabhängiger Methoden + Isotopenanalyse belegt die Ursache Mensch", "Fazit: Gewissheit entsteht durch Konvergenz der Belege"] },
+      { q: "Bewerte die Aussagekraft des Zitats „Wieder ein Jahr, wieder ein Rekord“ im Vergleich zu den Diagrammdaten.", l: ["Zitat ist knapp und emotional, drückt Sorge aus", "Es wird durch die Messreihe gedeckt: jährlich neue Höchstwerte", "Allein ohne Daten wäre es nur eine Meinungsäußerung", "Stärke: Daten + Expertenstimme zusammen"] },
+      { q: "Beurteile, ob ein extrem kalter Winter in Deutschland ein Gegenbeweis gegen die Erderwärmung wäre.", l: ["Transfer: Unterscheidung Wetter (einzelnes Ereignis) vs. Klima (Mittel über ca. 30 Jahre)", "Einzelne Kälteereignisse passen auch in einen Erwärmungstrend (Schwankungen)", "Global zählen Durchschnittswerte aus vielen Messreihen", "Fazit: kein Gegenbeweis"] },
     ],
   },
   C: {
     afb1: [
-      "Nenne die Begriffe Produzent, Primärkonsument und Sekundärkonsument mit je einem Savannenbeispiel.",
-      "Beschreibe, was eine Schlüsselart ist.",
-      "Nenne den ungefähren Anteil der Energie, der von einer Trophieebene zur nächsten gelangt.",
-      "Beschreibe die Rolle des Elefanten als Schlüsselart.",
-      "Nenne zwei Aasfresser der afrikanischen Savanne.",
-      "Beschreibe, warum es mehr Zebras als Löwen gibt.",
+      { q: "Nenne mindestens drei Folgen des Klimawandels.", l: ["Häufigere/stärkere Extremwetter (Hitzewellen, Starkregen, Dürre)", "Meeresspiegelanstieg", "Ozeanversauerung", "Gletscherschmelze"] },
+      { q: "Nenne, wie viel Prozent der überschüssigen Wärme die Ozeane aufnehmen.", l: ["Ca. 90 % der überschüssigen Wärme", "Zusätzlich ca. 25 % des ausgestoßenen CO₂"] },
+      { q: "Nenne zwei Ursachen des Meeresspiegelanstiegs.", l: ["Thermische Ausdehnung des erwärmten Meerwassers", "Schmelzende Gletscher (Landeis)"] },
+      { q: "Beschreibe, was Ozeanversauerung bedeutet.", l: ["Ozeane nehmen CO₂ auf", "Gelöstes CO₂ bildet Kohlensäure → Meerwasser wird saurer (pH sinkt)", "Bedroht Organismen mit Kalkschalen"] },
+      { q: "Nenne das wärmste Jahr seit Messbeginn laut Abbildung 4.", l: ["2024", "Temperaturabweichung ca. +1,28 °C gegenüber dem Mittel 1951–1980"] },
+      { q: "Nenne, um wie viel Zentimeter der Meeresspiegel seit 1900 gestiegen ist.", l: ["Um ca. 20 cm"] },
+      { q: "Nenne drei extreme Wetterereignisse in Deutschland seit 2018.", l: ["Hitze-/Dürresommer 2018 und 2019", "Hitzesommer 2022", "Flutkatastrophe im Ahrtal 2021 (Block D)"] },
+      { q: "Beschreibe, welche Meeresorganismen durch Ozeanversauerung besonders bedroht sind.", l: ["Organismen mit Kalkschalen/-skeletten: Korallen, Muscheln, Austern, Seeigel", "Viele Planktonarten am Anfang der Nahrungskette → Folgen für das ganze Ökosystem"] },
     ],
     afb2: [
-      "Erkläre, warum auf einer Savanne viele Zebras, aber nur wenige Löwen leben können.",
-      "Erkläre, wie der Wegfall einer Schlüsselart ein Ökosystem verändert.",
-      "Werte eine Energiepyramide nach dem 7-Schritte-Schema aus.",
-      "Erkläre die 10-Prozent-Regel der Energieweitergabe.",
-      "Vergleiche die Rolle von Produzenten und Konsumenten im Nahrungsnetz.",
+      { q: "Erkläre den Unterschied zwischen thermischer Ausdehnung und Eisschmelze als Ursache des Meeresspiegelanstiegs.", l: ["Thermische Ausdehnung: vorhandenes Wasser braucht beim Erwärmen mehr Volumen", "Eisschmelze: zusätzliches Wasser von Landeis (Gletscher) gelangt ins Meer", "Beide zusammen sind die Hauptursachen"] },
+      { q: "Erkläre die Würfel-Analogie zur Veränderung der Wahrscheinlichkeit von Extremwetter.", l: ["Würfel sieht gleich aus, aber die Sechs fällt öfter (1 in 5 statt 1 in 50)", "Übertragen: Extremereignisse gab es immer, aber sie werden häufiger", "Ein einzelnes Ereignis beweist nichts, die veränderte Häufigkeit schon"] },
+      { q: "Werte Abbildung 4 nach dem 7-Schritte-Schema aus.", l: ["Titel/Achsen: Temperaturabweichung in °C gegenüber 1951–1980, Zeitraum 1880–2024 (ausgewählte Jahre)", "Verlauf: bis ca. 1930 negative Werte, ab ca. 1980 deutlich positiv und steigend", "Auffälligkeit: 2024 Rekord mit +1,28 °C", "Quelle: NASA GISTEMP → seriös; Schluss: deutliche, beschleunigte Erwärmung"] },
+      { q: "Vergleiche die Aussagen der fiktiven Kommentarspalte und begründe, welche wissenschaftlich haltbar sind.", l: ["Haltbar: grüne_linda (Messwerte UBA), M.Becker (Trend statt Einzelereignis)", "Nicht haltbar: Nutzer_1997 („pendelt sich ein“), skeptiker_84 (Modelle pauschal unzuverlässig)", "WetterFan_B: Alltagserfahrung, keine Messdaten → Einzelerfahrung ersetzt keine Statistik"] },
+      { q: "Erkläre, warum Länder des Globalen Südens überproportional von den Folgen betroffen sind.", l: ["Viele leben direkt von der Landwirtschaft, oft ohne Reserven", "Weniger Geld für Schutz- und Anpassungsmaßnahmen", "Obwohl sie wenig beitragen (Afrika < 4 % der Emissionen)"] },
+      { q: "Vergleiche die Klimafolgen in Deutschland mit denen in ärmeren Ländern.", l: ["Ähnliche Ereignisse: Hitze, Dürre, Ernteausfälle, Starkregen", "Deutschland: Folgen hart, aber Versicherungen, Staat, Infrastruktur können abfedern", "Ärmere Länder: Folgen bedrohen oft direkt Ernährung und Existenz"] },
     ],
     afb3: [
-      "Beurteile, warum das Verschwinden einer einzigen Schlüsselart ein ganzes Ökosystem verändern kann.",
-      "Bewerte am Beispiel des Elefanten, welche Folgen sein Verschwinden für andere Arten hätte.",
-    ],
-    ki1: [
-      "Nenne einen Perspektiven-Prompt, der die Sicht von Kleinbauern auf den Elefanten einbezieht.",
-      "Beschreibe, wie sich das Bild einer Tierart je nach Perspektive ändern kann.",
-      "Nenne einen Grund, warum eine KI den Elefanten zuerst als „nützlich“ darstellt.",
-    ],
-    ki2: [
-      "Erkläre, wie sich die Bewertung des Elefanten ändert, wenn man Kleinbauern in Simbabwe nach ihrer Sicht fragt.",
-      "Erkläre, warum ökologische und wirtschaftliche Perspektiven auf dieselbe Art auseinanderfallen können.",
-    ],
-    ki3: [
-      "Beurteile, was der Perspektivwechsel beim Elefanten für eine gerechte Naturschutzpolitik bedeutet.",
+      { q: "Beurteile, warum der Klimawandel auch für Deutschland schon heute eine konkrete Herausforderung ist.", l: ["Konkrete Belege: Hitzesommer 2018/2019/2022, Ernteausfälle, Niedrigwasser, Waldsterben", "Alpengletscher haben seit 1900 über die Hälfte ihrer Masse verloren", "Folgen sind messbar und nicht nur Zukunftsszenario", "Begründete eigene Position"] },
+      { q: "Bewerte anhand des Tagebucheintrags, wie sich der Klimawandel auf den Alltag einer Landwirtin oder eines Landwirts auswirkt.", l: ["Existenzängste durch drei Dürresommer in Folge, Brunnen trocknet aus", "Anpassung: trockenheitsresistente Sorten, aber unsicher, ob ausreichend", "Beachten: fiktiver Text, veranschaulicht aber belegte Entwicklungen", "Bewertung: persönliche Perspektive macht abstrakte Daten greifbar"] },
+      { q: "Beurteile, welche Folgen ein weiterer Meeresspiegelanstieg um einen Meter für eine Küstenstadt wie Hamburg und für flache Inselstaaten hätte.", l: ["Transfer: Wissen zum Meeresspiegel auf konkrete Orte anwenden", "Hamburg: höheres Sturmflutrisiko, teure Deiche und Hafenanpassung, aber finanzierbar", "Inselstaaten: Landverlust, Versalzung von Trinkwasser und Böden, ggf. Umsiedlung", "Bezug Klimagerechtigkeit: geringer Beitrag, existenzielle Folgen"] },
     ],
   },
   D: {
     afb1: [
-      "Nenne die fünf Arten der „Big Five“.",
-      "Beschreibe die ökologische Rolle des Löwen als Spitzenräuber.",
-      "Nenne den IUCN-Gefährdungsstatus einer der drei großen Raubkatzen Afrikas.",
-      "Beschreibe, warum der Elefant als Ingenieur-Art bezeichnet wird.",
-      "Nenne ein Verhalten, das den Leoparden von anderen Großkatzen unterscheidet.",
-      "Beschreibe die Rolle der Matriarchin in einer Elefantenfamilie.",
+      { q: "Nenne den Temperaturanstieg in Deutschland seit 1881.", l: ["Linearer Trend: ca. 1,9 °C", "Global dagegen ca. 1,1–1,2 °C → Deutschland erwärmt sich schneller"] },
+      { q: "Beschreibe, was eine städtische Wärmeinsel ist.", l: ["Städte sind deutlich wärmer als das Umland, besonders nachts", "Beton, Asphalt und dichte Bebauung speichern Wärme und geben sie nur langsam ab"] },
+      { q: "Nenne drei extreme Hitzesommer in Deutschland seit 2018.", l: ["2018", "2019", "2022"] },
+      { q: "Beschreibe die Folgen des Ahrtal-Hochwassers 2021.", l: ["Auslöser: extremer Starkregen im Juli 2021", "Mehr als 130 Todesopfer", "Große Zerstörungen in der Region"] },
+      { q: "Nenne zwei Folgen der Hitzesommer 2018, 2019 und 2022 in Deutschland.", l: ["Ernteausfälle", "Niedrigwasser in Flüssen (Schifffahrt behindert)", "Großflächig sterbende Wälder"] },
+      { q: "Nenne, um wie viel Grad Städte nachts wärmer sein können als das Umland.", l: ["Um ca. 5 bis 10 °C"] },
+      { q: "Nenne das wärmste Jahr in Deutschland seit Messbeginn und die zugehörige Durchschnittstemperatur (Abbildung 5).", l: ["2024 mit 10,9 °C", "2,7 °C über dem Referenzmittel 1961–1990 (8,2 °C)", "0,3 °C über dem vorherigen Rekordjahr 2023"] },
     ],
     afb2: [
-      "Werte ein Diagramm zur Bestandsentwicklung afrikanischer Säugetiere aus.",
-      "Erkläre, warum Löwen für das Gleichgewicht der Savanne wichtig sind.",
-      "Erkläre, warum große Säugetiere im internationalen Naturschutz besonders viel Aufmerksamkeit erhalten.",
-      "Vergleiche Elefant und Leopard hinsichtlich ihrer ökologischen Rolle.",
+      { q: "Erkläre, warum Städte wärmer sind als das Umland.", l: ["Beton und Asphalt speichern tagsüber viel Wärme", "Nachts wird sie nur langsam wieder abgegeben", "Dichte Bebauung → weniger Abkühlung"] },
+      { q: "Erkläre, welche Personengruppen besonders unter städtischen Wärmeinseln leiden.", l: ["Ältere Menschen", "Menschen mit Herz-Kreislauf-Erkrankungen", "Grund: Körper kann sich bei nächtlicher Hitze kaum erholen"] },
+      { q: "Vergleiche zwei Extremwetterereignisse der letzten Jahre in Deutschland.", l: ["Z. B. Dürresommer 2018 vs. Ahrtal-Flut 2021", "Gegensätzliche Wetterlage: zu wenig vs. extrem viel Niederschlag", "Gemeinsam: beide passen zur vorhergesagten Zunahme von Extremereignissen"] },
+      { q: "Erkläre, warum Klimamodelle das Ahrtal-Hochwasser nicht konkret vorhersagen konnten, es aber trotzdem zu ihren Vorhersagen passt.", l: ["Modelle sagen keine einzelnen Ereignisse an einem bestimmten Ort voraus", "Sie sagen eine steigende Häufigkeit und Intensität solcher Ereignisse voraus", "Ahrtal ist ein Beispiel für diese Entwicklung (vgl. Würfel-Analogie)"] },
+      { q: "Werte Abbildung 5 (Temperatur Deutschland) aus: Beschreibe den Verlauf und benenne das wärmste Jahr.", l: ["Bis ca. 1980 Werte um das Referenzmittel (8,2 °C)", "Ab 1990 deutlich darüber, 2020er-Jahre bei ca. 10,5 °C und mehr", "Wärmstes Jahr: 2024 mit 10,9 °C; Achtung: y-Achse beginnt bei 7 °C"] },
     ],
     afb3: [
-      "Beurteile, ob die Bevorzugung großer Säugetiere im Naturschutz ökologisch gerechtfertigt ist.",
-      "Bewerte, ob Afrika mehr reine Schutzgebiete oder mehr gemeindebasierte Ansätze für seine großen Säugetiere braucht.",
-    ],
-    ki1: [
-      "Nenne einen Perspektiven-Prompt zur Frage, welche Tiere für den Erhalt des Ökosystems wichtig sind.",
-      "Beschreibe, was der Vergleich westlicher und lokaler Prioritäten zeigen kann.",
-      "Nenne einen Grund, warum eine KI bestimmte „wichtige“ Arten bevorzugt nennt.",
-    ],
-    ki2: [
-      "Erkläre, warum lokale Gemeinschaften andere Arten für wichtig halten können als die westliche Naturschutzforschung.",
-      "Erkläre, wie ein Perspektiven-Prompt eine einseitige KI-Antwort ausgleichen kann.",
-    ],
-    ki3: [
-      "Beurteile, was es bedeutet, wenn eine KI bei der Frage nach „wichtigen“ Tieren globalnördliche Prioritäten bevorzugt.",
+      { q: "Beurteile, welche Anpassungsmaßnahmen an den Klimawandel in Deutschland bereits ausreichend umgesetzt sind.", l: ["Über das Material hinaus: eigene Recherche/Wissen einbringen", "Mögliche Beispiele: Hitzeschutzpläne, Hochwasserschutz, Stadtbegrünung, Waldumbau", "Abgleich mit den Ereignissen (Ahrtal, Hitzesommer) → Lücken benennen", "Begründete Position statt pauschaler Aussage"] },
+      { q: "Bewerte, ob die Deutsche Anpassungsstrategie ausreicht, um auf künftige Extremereignisse vorbereitet zu sein.", l: ["Über das Material hinaus: Strategie existiert seit 2008 (mehrfach fortgeschrieben)", "Kriterien: Umsetzung vor Ort, Finanzierung, Tempo der Erwärmung (1,9 °C)", "Bezug zu Ahrtal und Hitzesommern als Prüfstein", "Eigenes, begründetes Urteil"] },
+      { q: "Entwickle Vorschläge, wie eure Schule oder eure Stadt sich besser gegen Hitzewellen schützen könnte.", l: ["Transfer auf die eigene Umgebung", "Beispiele: Verschattung, Begrünung/Entsiegelung, Trinkwasserangebote, Hitzefrei-Regeln, Lüftung", "Bezug zur städtischen Wärmeinsel und gefährdeten Gruppen", "Vorschläge begründen und auf Umsetzbarkeit prüfen"] },
     ],
   },
   E: {
     afb1: [
-      "Nenne die ungefähre Zahl der in Afrika vorkommenden Vogelarten.",
-      "Beschreibe die ökologische Rolle der Geier.",
-      "Nenne eine Gefahr, die Zugvögeln auf ihrem Weg über die Sahara droht.",
-      "Beschreibe, wovon sich die Zwergflamingos der ostafrikanischen Sodaseen ernähren.",
-      "Nenne einen afrikanischen Greifvogel.",
+      { q: "Nenne den Anteil Afrikas an den weltweiten Treibhausgasemissionen.", l: ["Weniger als 4 %"] },
+      { q: "Beschreibe die Entwicklung des Tschadsees von den 1960er Jahren bis heute (Abbildung 6).", l: ["1963: ca. 25.000 km²", "Bis Mitte der 1980er Einbruch auf ca. 2.500 km² (−90 %)", "Seit ca. 2000 wieder steigend: 2013 ca. 14.000 km², 2024 ca. 24.500 km²"] },
+      { q: "Nenne den Begriff für Landwirtschaft, die nur den Eigenbedarf deckt.", l: ["Subsistenzlandwirtschaft"] },
+      { q: "Nenne, wie viele Menschen vom Wasser des Tschadsees leben.", l: ["Rund 40 Millionen Menschen", "In Tschad, Niger, Nigeria und Kamerun"] },
+      { q: "Nenne eine Region, die von Dürren in Afrika besonders betroffen ist.", l: ["Sahelzone (Savannengürtel südlich der Sahara)"] },
+      { q: "Beschreibe, warum Subsistenzlandwirt*innen besonders verletzlich gegenüber Ernteausfällen sind.", l: ["Sie bauen nur an, was sie selbst zum Überleben brauchen", "Es gibt keine Reserven oder Einkommen zum Zukaufen", "Ernteausfall → unmittelbar Hunger"] },
     ],
     afb2: [
-      "Erkläre, warum der Rückgang der Geier ein Problem für ganze Ökosysteme ist.",
-      "Erkläre, warum Vogelschutz eine internationale Aufgabe ist.",
-      "Erkläre den Zusammenhang zwischen Klimawandel und Zugrouten (Rückbezug Einheit 1).",
-      "Vergleiche die ökologische Rolle von Geiern und Greifvögeln.",
+      { q: "Erkläre, warum Afrika besonders stark vom Klimawandel betroffen ist, obwohl es wenig dazu beiträgt.", l: ["Erwärmung verläuft dort oft schneller als im globalen Mittel", "Dürren und unberechenbare Regenzeiten treffen viele Menschen in der Landwirtschaft", "Wenig Mittel für Anpassung; Emissionen: Mali < 0,3 t pro Kopf vs. Deutschland ca. 30-fach"] },
+      { q: "Erkläre die heute angenommenen Hauptursachen für den zwischenzeitlichen Rückgang des Tschadsees.", l: ["Schwere Sahel-Dürren der 1970er/80er Jahre", "Stark ausgeweitete künstliche Bewässerung", "Klimawandel nur ein Faktor unter mehreren"] },
+      { q: "Werte Abbildung 6 (Tschadsee) aus: Was fällt am Verlauf nach den 1980er Jahren auf?", l: ["Tiefpunkt Mitte 1980er/1990er (ca. 2.000–2.500 km²)", "Seit ca. 2000 deutliche Erholung", "2024 fast wieder auf dem Stand von 1963 (ca. 24.500 km²)", "Einschränkung: nur ausgewählte Jahre, neueste Daten noch unveröffentlicht"] },
+      { q: "Erkläre, warum die frühere Darstellung des Tschadsees als reines Klimawandel-Opfer als zu einfach gilt.", l: ["Mehrere Ursachen (Dürren, Bewässerung) statt nur einer", "Der See hat sich wieder erholt", "Monokausale Erklärungen blenden Einflussfaktoren aus"] },
     ],
     afb3: [
-      "Beurteile, warum ökologisch wichtige, aber unscheinbare Vögel wie Geier weniger Aufmerksamkeit erhalten.",
-      "Bewerte, was der Geier-Rückgang für den Naturschutz insgesamt bedeutet.",
-    ],
-    ki1: [
-      "Nenne einen Perspektiven-Prompt zu bedrohten Vogelarten aus lokaler Sicht.",
-      "Beschreibe, warum indigene Perspektiven auf Vogelvielfalt in KI-Antworten fehlen können.",
-      "Nenne einen Grund, warum eine KI bekannte Arten häufiger nennt als unscheinbare.",
-    ],
-    ki2: [
-      "Erkläre, wie sich eine KI-Antwort ändert, wenn man nach der Bedeutung von Vögeln für Gemeinschaften im Nigerdelta fragt.",
-      "Erkläre, warum der Abgleich mit einer Fachquelle (z. B. BirdLife) bei KI-Antworten wichtig ist.",
-    ],
-    ki3: [
-      "Beurteile, welche Perspektive auf Vogelvielfalt in einer allgemeinen KI-Antwort fehlt.",
+      { q: "Beurteile, ob Industrieländer eine besondere Verantwortung gegenüber afrikanischen Ländern haben.", l: ["Pro: hohe historische und aktuelle Emissionen, Afrika < 4 %", "Pro: mehr Mittel für Unterstützung und Anpassung", "Mögliche Gegenargumente: auch Schwellenländer emittieren viel, Eigenverantwortung", "Begründetes Urteil (Bezug Block K: CBDR)"] },
+      { q: "Beurteile, warum es ein Zeichen guter Wissenschaft ist, wenn Forschende ihre Einschätzung zum Tschadsee anhand neuer Daten korrigieren.", l: ["Wissenschaft korrigiert sich selbst, wenn neue Belege vorliegen (roter Faden)", "Korrektur schwächt nicht den Klimawandel-Befund, sondern zeigt Sorgfalt", "Gegensatz zu Desinformation, die an Behauptungen festhält"] },
+      { q: "Beurteile, ob der Klimawandel ein Grund für Migration werden kann.", l: ["Transfer: Klimafolgen mit gesellschaftlichen Folgen verknüpfen", "Pro: Dürren und Ernteausfälle zerstören Lebensgrundlagen (Sahel, Subsistenz)", "Einschränkung: Migration hat meist mehrere Ursachen (Konflikte, Armut, Politik)", "Differenziertes Urteil statt Monokausalität (vgl. Tschadsee)"] },
     ],
   },
   F: {
     afb1: [
-      "Nenne je ein Beispiel für ein Reptil, eine Amphibie und eine Insektengruppe Afrikas.",
-      "Beschreibe die ökologische Rolle des Nilkrokodils.",
-      "Nenne, warum Amphibien als Bioindikatoren gelten.",
-      "Beschreibe, was Termiten für den Boden leisten.",
-      "Nenne eine Bedrohung für afrikanische Frösche.",
+      { q: "Nenne die Anzahl der bisherigen großen Massenaussterben in der Erdgeschichte.", l: ["Fünf", "Viele Forschende sprechen heute von einem sechsten, vom Menschen verursachten"] },
+      { q: "Beschreibe, was Korallenbleiche ist.", l: ["Bei zu warmem Wasser stoßen Korallen ihre symbiotischen Algen (Zooxanthellen) ab", "Korallen verlieren ihre Farbe und erscheinen weiß", "Hält der Stress an, sterben sie"] },
+      { q: "Nenne zwei Klimakipppunkte.", l: ["Grönländischer Eisschild, Westantarktischer Eisschild", "Arktischer Permafrost, Warmwasser-Korallenriffe", "Amazonas-Regenwald, Atlantische Umwälzzirkulation (AMOC)"] },
+      { q: "Nenne, um wie viel die aktuelle Aussterberate höher liegt als die natürliche.", l: ["Um das 100- bis 1.000-Fache der natürlichen Hintergrundrate"] },
+      { q: "Nenne die Ursache für das Massenaussterben am Ende der Kreidezeit.", l: ["Einschlag eines ca. 10 km großen Asteroiden auf der Halbinsel Yucatán (vor ca. 66 Mio. Jahren)", "Folgen: Feuerstürme, Impaktwinter, zusammenbrechende Nahrungsketten"] },
+      { q: "Beschreibe den Zustand des Great Barrier Reef in den letzten Jahrzehnten.", l: ["Mehrere schwere Massenbleichen", "Ursache: erhöhte Wassertemperaturen"] },
     ],
     afb2: [
-      "Erkläre, warum Insekten wie Termiten oder Mistkäfer für das Ökosystem unverzichtbar sind.",
-      "Erkläre, warum Amphibien empfindliche Bioindikatoren sind.",
-      "Erkläre, wie die Tsetsefliege indirekt Wildtierlebensräume geschützt hat.",
-      "Vergleiche die ökologische Bedeutung von Nilkrokodil und Mistkäfer.",
+      { q: "Erkläre, was einen Klimakipppunkt von einem normalen, schrittweisen Veränderungsprozess unterscheidet.", l: ["Schrittweise: Dimmer – mehr CO₂ → etwas wärmer", "Kipppunkt: Lichtschalter – lange wenig, dann abrupter Wechsel in neuen Zustand", "Danach selbstverstärkend und kaum umkehrbar"] },
+      { q: "Erkläre, wie Korallenbleiche entsteht. Nutze dabei den Begriff Symbiose.", l: ["Symbiose: Algen liefern der Koralle Nährstoffe (Photosynthese) und Farbe", "Wassertemperatur 1–2 °C über dem Sommermaximum → Koralle stößt Algen ab", "Ohne Algen fehlen Nährstoffe → bei anhaltendem Stress stirbt die Koralle"] },
+      { q: "Vergleiche zwei verschiedene Klimakipppunkte hinsichtlich Auslöser und Folgen.", l: ["Z. B. Grönland-Eisschild: Schwelle ca. 1,5 °C, Folge: Meeresspiegelanstieg", "AMOC: Schwelle ca. 4 °C, Folge: veränderte Meeresströmung, Klima Europas", "Gemeinsam: selbstverstärkend, unumkehrbar; Unterschied: Schwelle und Art der Folge"] },
+      { q: "Erkläre, warum das Artensterben nicht allein auf den Klimawandel zurückzuführen ist.", l: ["Weitere Ursachen: Lebensraumzerstörung, Umweltverschmutzung", "Eingeschleppte Arten, Übernutzung", "Klimawandel verstärkt den Druck zusätzlich"] },
+      { q: "Werte Abbildung 7 (Kipppunkte) aus: Welche Kipppunkte liegen nahe am 1,5-Grad-Ziel?", l: ["Bei ca. 1,5 °C: Grönländischer und Westantarktischer Eisschild, Warmwasser-Korallenriffe, arktischer Permafrost (abrupt)", "Höher: Amazonas (ca. 3,5 °C), AMOC (ca. 4,0 °C)", "Quelle: Armstrong McKay et al. 2022 – zentrale Schätzwerte mit großer Unsicherheit"] },
     ],
     afb3: [
-      "Beurteile, ob es gerechtfertigt ist, dass Naturschutz-Spenden vor allem großen Säugetieren zugutekommen.",
-      "Bewerte, warum unscheinbare Arten für das Ökosystem oft wichtiger sind als bekannte Charisma-Arten.",
-    ],
-    ki1: [
-      "Nenne einen Prompt, der die KI zwingt, auch Insekten und Amphibien zu berücksichtigen.",
-      "Beschreibe, was mit „Charisma-Arten“ gemeint ist.",
-      "Nenne einen Grund, warum eine KI große Säugetiere bevorzugt nennt.",
-    ],
-    ki2: [
-      "Erkläre, wie sich eine KI-Antwort ändert, wenn man sie ausdrücklich nach Insekten und Amphibien fragt.",
-      "Erkläre, warum die Sichtbarkeit einer Art ihre Darstellung in KI-Antworten beeinflusst.",
-    ],
-    ki3: [
-      "Beurteile, welche Folgen die Bevorzugung sichtbarer Arten durch KI für den Artenschutz haben kann.",
+      { q: "Beurteile, warum „wir warten ab“ bei Klimakipppunkten keine sinnvolle Strategie ist.", l: ["Kipppunkte sind nach Überschreiten nicht mehr umkehrbar", "Mehrere liegen schon nahe 1,5 °C (heute ca. 1,2 °C)", "Unsicherheit heißt: Schwelle kann auch früher liegen", "Abwarten = Risiko, das sich später nicht mehr korrigieren lässt"] },
+      { q: "Beurteile unter Anwendung des Vorsorgeprinzips, wie mit der wissenschaftlichen Unsicherheit bei Kipppunkten umgegangen werden sollte.", l: ["Über das Material hinaus: Vorsorgeprinzip = bei drohenden schweren, unumkehrbaren Schäden handeln, auch ohne volle Gewissheit", "Anwendung: Schwellenwerte unsicher, Folgen aber gravierend und irreversibel", "Mögliches Gegenargument: Kosten von Maßnahmen", "Urteil mit Abwägung von Risiko und Kosten"] },
+      { q: "Bewerte, ob der Schutz von Korallenriffen noch sinnvoll ist, wenn deren Kipppunkt bereits bei etwa 1,5 °C liegt.", l: ["Transfer: Kipppunkt-Wissen auf eine Schutzentscheidung anwenden", "Pro: jedes Zehntelgrad zählt, lokale Belastungen reduzieren, Arten erhalten", "Contra: Ressourcen evtl. besser anderswo einsetzen", "Begründetes Werturteil (ökologisch, wirtschaftlich, ethisch)"] },
     ],
   },
   G: {
     afb1: [
-      "Nenne drei Hauptbedrohungen für ostafrikanische Korallenriffe.",
-      "Beschreibe, was bei der Korallenbleiche geschieht.",
-      "Nenne, wodurch sich der Benguela-Strom auszeichnet.",
-      "Beschreibe drei Ökosystemleistungen von Mangrovenwäldern.",
-      "Nenne eine Ursache der Ozeanversauerung (Rückbezug Einheit 1).",
+      { q: "Nenne drei erneuerbare Energiequellen.", l: ["Windkraft", "Photovoltaik (Sonne)", "Wasserkraft, Biomasse"] },
+      { q: "Nenne den Anteil erneuerbarer Energien am deutschen Strommix 2024 und die wichtigste Einzelquelle (Abbildung 8).", l: ["59,4 % erneuerbar", "Wichtigste Einzelquelle: Windkraft mit ca. 31,5 %"] },
+      { q: "Nenne zwei Möglichkeiten der Energiespeicherung.", l: ["Batteriespeicher", "Pumpspeicherkraftwerke", "Grüner Wasserstoff"] },
+      { q: "Nenne, wie stark die Kosten für Solarmodule seit 2010 gesunken sind.", l: ["Um mehr als 90 %", "Solarstrom ist dadurch vielerorts die günstigste Stromquelle"] },
+      { q: "Nenne den Anteil erneuerbarer Energien am deutschen Strom im Jahr 1990 und im Jahr 2024.", l: ["1990: unter 5 %", "2024: 59,4 %"] },
+      { q: "Beschreibe, was grüner Wasserstoff ist.", l: ["Wasserstoff, der per Elektrolyse aus Wasser hergestellt wird", "Der Strom dafür stammt aus erneuerbaren Quellen", "Speicherbar und später wieder verstrombar"] },
     ],
     afb2: [
-      "Erkläre den Mechanismus der Korallenbleiche Schritt für Schritt.",
-      "Erkläre, warum der Benguela-Auftrieb besonders produktiv ist.",
-      "Vergleiche Korallenriff und Benguela-Auftrieb hinsichtlich Bedeutung und Bedrohung.",
-      "Erkläre, warum wiederholte Bleichereignisse besonders gefährlich sind.",
+      { q: "Erkläre, warum Energiespeicherung die größte Herausforderung der Energiewende ist.", l: ["Wind und Sonne liefern schwankend (Nacht, Flaute)", "Überschüsse müssen gespeichert und bei Bedarf abrufbar sein", "Erzeugung ist inzwischen günstig, Speicherung und Netze sind der Engpass"] },
+      { q: "Vergleiche Batteriespeicher, Pumpspeicherkraftwerke und grünen Wasserstoff.", l: ["Batterie: schnell, effizient, eher kurzfristig", "Pumpspeicher: große Mengen, aber an geeignete Landschaft gebunden", "Wasserstoff: langfristig speicherbar, aber Verluste bei Umwandlung", "Kurzfristige vs. langfristige Speicher ergänzen sich"] },
+      { q: "Erkläre, warum die Verbrennung fossiler Brennstoffe der wichtigste Treiber des menschengemachten Klimawandels ist.", l: ["Kohle, Öl und Gas haben über Jahrmillionen Kohlenstoff gebunden", "Dieser wird in wenigen Jahrzehnten als CO₂ freigesetzt", "Beleg: Isotopenanalyse zeigt fossile Herkunft (Block B)"] },
+      { q: "Erkläre, warum Solarstrom heute in vielen Regionen die günstigste Form der Stromerzeugung ist.", l: ["Modulkosten seit 2010 um über 90 % gefallen", "Keine Brennstoffkosten im Betrieb", "Einschränkung: Kosten für Speicherung kommen hinzu"] },
+      { q: "Erkläre die Wasser-Elektrolyse als Redoxreaktion: Was geschieht an Anode und Kathode?", l: ["Kathode (Minuspol): Reduktion → Wasserstoff entsteht (Elektronenaufnahme)", "Anode (Pluspol): Oxidation → Sauerstoff entsteht (Elektronenabgabe)", "Gesamt: 2 H₂O → 2 H₂ + O₂; elektrische Energie wird in chemische Energie umgewandelt"] },
+      { q: "Werte Abbildung 8 (Strommix 2024) aus: Welche Energieträger tragen am meisten bei?", l: ["Windkraft 31,5 %, Kohle 22,5 %, Biomasse/Sonstige 14,0 %", "Photovoltaik 13,8 %, Erdgas 13,5 %, Wasserkraft 4,7 %", "Erneuerbar gesamt 59,4 %; Kohle bleibt größter fossiler Träger", "Quelle: Destatis, vorläufig und gerundet"] },
     ],
     afb3: [
-      "Beurteile, ob der Schutz von Korallenriffen eher über lokale Maßnahmen oder über globalen Klimaschutz erfolgen sollte.",
-      "Bewerte, warum lokale Schutzmaßnahmen an Grenzen stoßen, wenn die Erwärmung nicht begrenzt wird.",
-    ],
-    ki1: [
-      "Nenne einen Perspektiven-Prompt zum Korallenschutz aus Sicht von Küstengemeinden.",
-      "Beschreibe, warum wirtschaftliche Abhängigkeiten in KI-Antworten fehlen können.",
-      "Nenne einen Grund, warum eine KI beim Meeresschutz zuerst globale Lösungen nennt.",
-    ],
-    ki2: [
-      "Erkläre, wie sich eine KI-Antwort ändert, wenn man nach den Prioritäten kenianischer Küstengemeinden fragt.",
-      "Erkläre, warum lokale Nutzungsinteressen für wirksamen Meeresschutz mitgedacht werden müssen.",
-    ],
-    ki3: [
-      "Beurteile, wessen Interessen eine allgemeine KI-Antwort zum Korallenschutz zuerst übergeht.",
+      { q: "Beurteile, ob Deutschland realistisch bis 2045 klimaneutral werden kann.", l: ["Über das Material hinaus: gesetzliches Ziel der Klimaneutralität 2045", "Pro: schneller Anstieg der Erneuerbaren (unter 5 % → 59,4 %), sinkende Kosten", "Contra: Speicher, Netzausbau, Wärme, Verkehr und Industrie noch weit zurück", "Begründetes Urteil"] },
+      { q: "Beurteile, ob Wasserstoff auch dann noch klimafreundlich ist, wenn der Strom für die Elektrolyse aus Kohlekraftwerken stammt.", l: ["Wasserstoff ist nur so sauber wie der eingesetzte Strom", "Mit Kohlestrom: hohe CO₂-Emissionen + Umwandlungsverluste → schlechter als direkte Nutzung", "Deshalb Begriff „grün“ nur bei erneuerbarem Strom", "Fazit: Herkunft der Energie entscheidet"] },
+      { q: "Beurteile, welchen Beitrag Elektroautos zum Klimaschutz leisten, wenn der Strommix zu etwa 59 % erneuerbar ist.", l: ["Transfer: Strommix auf den Verkehrssektor anwenden", "Pro: Fahrbetrieb umso sauberer, je höher der Anteil Erneuerbarer", "Einschränkungen: Batterieherstellung, 22,5 % Kohlestrom im Mix", "Urteil: Nutzen wächst mit fortschreitender Energiewende"] },
     ],
   },
   H: {
     afb1: [
-      "Nenne zwei durch Wilderei stark bedrohte Tierarten Afrikas.",
-      "Beschreibe, woraus Nashornhorn besteht.",
-      "Nenne den ungefähren jährlichen Umsatz der weltweiten Wildtierkriminalität.",
-      "Beschreibe, was das CITES-Abkommen regelt.",
-      "Nenne das Jahr, in dem das letzte männliche Nördliche Breitmaulnashorn starb.",
+      { q: "Nenne das zentrale Ziel des Pariser Abkommens und das Jahr, in dem es beschlossen wurde.", l: ["Erwärmung deutlich unter 2 °C, möglichst 1,5 °C gegenüber vorindustrieller Zeit", "Beschlossen am 12. Dezember 2015"] },
+      { q: "Beschreibe, was NDCs sind.", l: ["Nationally Determined Contributions = national festgelegte Beiträge", "Jedes Land legt seine Klimaziele selbst fest", "Alle fünf Jahre sollen ehrgeizigere Ziele vorgelegt werden"] },
+      { q: "Nenne die Anzahl der Staaten, die sich 2015 auf das Pariser Abkommen geeinigt haben.", l: ["196 Staaten"] },
+      { q: "Beschreibe, was eine COP-Konferenz ist.", l: ["Conference of the Parties = jährliche Weltklimakonferenz", "Dort wird über Klimaziele und Maßnahmen verhandelt", "Ergebnisse unterschiedlich (z. B. Fonds für klimabedingte Schäden)"] },
+      { q: "Nenne die projizierte Erwärmung bis 2100 bei aktueller Klimapolitik (Abbildung 9).", l: ["Ca. 2,7 °C", "Zum Vergleich: ohne Klimapolitik ca. 4,1 °C"] },
     ],
     afb2: [
-      "Erkläre, warum Wilderei trotz internationaler Verbote fortbesteht.",
-      "Erkläre den Zusammenhang zwischen Armut vor Ort und dem Profit krimineller Netzwerke.",
-      "Werte ein Diagramm zum Wilderei-Trend bei Elefanten aus.",
-      "Erkläre, warum die CITES-Ausnahmeverkäufe umstritten sind.",
+      { q: "Erkläre, warum das Pariser Abkommen keinen Sanktionsmechanismus hat.", l: ["Einigung von 196 souveränen Staaten war nur mit freiwilligen Zielen möglich", "Zwang hätte viele Staaten vom Beitritt abgehalten", "Stattdessen: Transparenz und öffentlicher Druck"] },
+      { q: "Erkläre den Kreislauf aus Selbstverpflichtung, Transparenz und öffentlichem Druck im Pariser Abkommen.", l: ["Selbstverpflichtung: Länder legen eigene Ziele (NDCs) fest", "Transparenz: Fortschritte werden öffentlich berichtet und verglichen", "Druck: Öffentlichkeit und andere Staaten fordern alle fünf Jahre mehr Ehrgeiz"] },
+      { q: "Erkläre, welche Erwärmung laut Climate Action Tracker bei Erfüllung aller aktuellen Zusagen zu erwarten wäre.", l: ["Nationale Ziele (NDCs): ca. 2,6 °C", "Alle Zusagen inkl. Netto-Null-Ziele: ca. 2,2 °C", "Beides deutlich über dem 1,5-Grad-Ziel"] },
+      { q: "Werte Abbildung 9 (Erwärmungspfade) aus: Wie stark hat die bisherige Politik den Pfad gegenüber „ohne Politik“ gesenkt?", l: ["Ohne Politik: 4,1 °C, aktuelle Politik: 2,7 °C → Senkung um ca. 1,4 °C", "2015 lag die Projektion noch bei ca. 3,6 °C", "Quelle: Climate Action Tracker, Medianwerte mit großer Unsicherheit"] },
     ],
     afb3: [
-      "Beurteile, ob ein kontrollierter legaler Handel eine Alternative zum Elfenbein-Verbot sein könnte.",
-      "Bewerte, ob Wilderei wirksamer durch Strafverfolgung oder durch wirtschaftliche Beteiligung der Bevölkerung bekämpft wird.",
-    ],
-    ki1: [
-      "Nenne einen Perspektiven-Prompt zur Wilderei aus Sicht einer betroffenen Bauernfamilie.",
-      "Beschreibe, wie die Perspektive beeinflusst, was als „Problem“ gilt.",
-      "Nenne einen Grund, warum eine KI Wilderei zuerst als Strafverfolgungsproblem darstellt.",
-    ],
-    ki2: [
-      "Erkläre, wie sich die vorgeschlagene Lösung ändert, wenn man Wilderei aus Sicht einer armen Bauernfamilie betrachtet.",
-      "Erkläre, warum die Definition von „Problem“ und „Lösung“ von der Perspektive abhängt.",
-    ],
-    ki3: [
-      "Beurteile, was der Perspektivwechsel bei der Wilderei über einseitige KI-Lösungen verrät.",
+      { q: "Beurteile, ob freiwillige nationale Klimaziele ohne Sanktionsmechanismus ein wirksames Instrument für Klimaschutz sind.", l: ["Pro: fast alle Staaten beteiligt, Pfad messbar gesenkt (3,6 → 2,7 °C)", "Contra: Zusagen reichen nicht für 1,5 °C, Nichteinhaltung ohne Folgen", "Abwägung Beteiligung vs. Verbindlichkeit", "Begründetes Urteil"] },
+      { q: "Beurteile anhand von Abbildung 9, ob das Pariser Abkommen als Erfolg oder als Misserfolg zu werten ist.", l: ["Erfolg: Erwärmungspfad deutlich abgesenkt", "Misserfolg: Ziel 1,5 °C wird mit allen Szenarien außer dem Zielszenario verfehlt", "Kriterium festlegen: Fortschritt vs. Zielerreichung", "Differenziertes Urteil"] },
+      { q: "Beurteile, ob ein verbindliches Klimaabkommen mit Strafen (wie früher das Kyoto-Protokoll für Industrieländer) wirksamer wäre als das Pariser Abkommen.", l: ["Über das Material hinaus: Kyoto (1997) legte verbindliche Ziele nur für Industrieländer fest", "Pro Verbindlichkeit: Ziele wären einklagbar/überprüfbar", "Contra: große Emittenten traten nicht bei oder stiegen aus; Strafen schwer durchsetzbar", "Urteil unter Abwägung von Reichweite und Verbindlichkeit"] },
     ],
   },
   I: {
     afb1: [
-      "Nenne drei Beispiele, wie der Klimawandel afrikanische Lebensräume verändert.",
-      "Beschreibe, warum sich Afrika schneller erwärmt als der globale Durchschnitt.",
-      "Nenne eine Tierart, die bereits nachweisbar unter dem Klimawandel leidet.",
-      "Beschreibe die Folgen des austrocknenden Lake Turkana für Nilkrokodile.",
-      "Nenne den Zusammenhang zwischen Ozeanerwärmung und Korallenbleiche.",
+      { q: "Nenne den durchschnittlichen CO₂-Fußabdruck pro Kopf in Deutschland und den Bereich mit dem größten Anteil (Abbildung 10).", l: ["Ca. 10,4 t CO₂-Äquivalente pro Jahr", "Größter Bereich: sonstiger Konsum mit ca. 2,9 t"] },
+      { q: "Nenne den Konzern, der den Begriff „Carbon Footprint“ populär machen ließ.", l: ["Der Ölkonzern BP", "Werbekampagne ab 2004 mit einem der ersten Online-Rechner"] },
+      { q: "Nenne den weltweiten Durchschnitt des CO₂-Fußabdrucks pro Kopf.", l: ["Ca. 4,7 t pro Jahr"] },
+      { q: "Nenne, wie niedrig der gesamte Fußabdruck langfristig liegen müsste (Abbildung 10).", l: ["Unter 1 t pro Person und Jahr (1,5-Grad-Ziel)", "Deutschland liegt rund zehnmal darüber"] },
     ],
     afb2: [
-      "Erkläre an einem Beispiel, wie der Klimawandel eine Tierart direkt bedroht (nutze Lebensraum, Angepasstheit, Klimawandel).",
-      "Erkläre, warum Zugvögel besonders empfindlich auf Klimaveränderungen reagieren.",
-      "Vergleiche, wie der Klimawandel drei verschiedene Arten unterschiedlich bedroht.",
-      "Erkläre den Zusammenhang zwischen Dürre im Sahel und veränderten Wanderungen.",
+      { q: "Erkläre, warum der Begriff „Carbon Footprint“ ausgerechnet von einem Ölkonzern populär gemacht wurde.", l: ["Verantwortung wird auf Einzelne verlagert", "Blick weg von Industrie und strukturellen Entscheidungen (Energie, Verkehr)", "Nützt dem Konzern, weil sein Geschäftsmodell weniger im Fokus steht"] },
+      { q: "Vergleiche den deutschen Pro-Kopf-Fußabdruck mit dem weltweiten Durchschnitt und dem langfristigen Zielwert.", l: ["Deutschland: ca. 10,4 t", "Weltweit: ca. 4,7 t → Deutschland mehr als doppelt so hoch", "Ziel: unter 1 t → Deutschland rund zehnmal darüber"] },
+      { q: "Erkläre, warum Durchschnittswerte beim CO₂-Fußabdruck große Unterschiede verdecken.", l: ["Einkommen spielt große Rolle: hohe Einkommen oft doppelt so viel", "Gründe: mehr Flüge, größere Wohnungen, mehr Konsum", "Durchschnitt beschreibt kaum eine reale Person"] },
+      { q: "Werte Abbildung 10 aus: Welcher Lebensbereich verursacht die meisten Emissionen – und überrascht das?", l: ["Sonstiger Konsum 2,9 t, Wohnen 2,2 t, Mobilität 2,0 t, Ernährung 1,6 t, öffentl. Infrastruktur 1,2 t, Strom 0,5 t", "Überraschend: Konsum vor Mobilität", "Selbst jeder einzelne Bereich außer Strom liegt über dem Gesamtziel von 1 t", "Quelle: UBA, konsumbasiert, gerundet"] },
     ],
     afb3: [
-      "Beurteile, ob der Klimawandel oder die Wilderei die größere kurzfristige Bedrohung ist.",
-      "Beurteile, welche Verantwortung sich für Industrieländer aus Afrikas Betroffenheit ergibt (Rückbezug Einheit 1).",
-    ],
-    ki1: [
-      "Nenne einen Perspektiven-Prompt zu den Klimafolgen aus Sicht eines Biologen in Nairobi.",
-      "Beschreibe, wie sich die Qualität einer KI-Antwort durch eine konkrete Perspektive ändern kann.",
-      "Nenne einen Grund, warum lokale Expertise in globalen Debatten oft überhört wird.",
-    ],
-    ki2: [
-      "Erkläre, wie ein Perspektiven-Prompt die inhaltliche und emotionale Qualität einer KI-Antwort zu Klimafolgen verändert.",
-      "Erkläre, warum die Herkunft der Expertise beeinflusst, wessen Stimme in KI-Antworten Gehör findet.",
-    ],
-    ki3: [
-      "Beurteile, was es für globale Naturschutzdebatten bedeutet, wenn KI vorwiegend globalnördliche Expertise abbildet.",
+      { q: "Beurteile, ob die Fokussierung auf den individuellen CO₂-Fußabdruck sinnvoll ist oder von struktureller Verantwortung ablenkt.", l: ["Sinnvoll: macht Emissionsquellen verständlich, eigenes Handeln wirkt", "Ablenkend: Ursprung in BP-Kampagne; öffentliche Infrastruktur (1,2 t) kaum individuell beeinflussbar", "Beide Ebenen verbinden: persönlich und politisch", "Begründetes Urteil"] },
+      { q: "Bewerte, ob ein Flug durch den Kauf von CO₂-Kompensation (z. B. Baumpflanzungen) wirklich „klimaneutral“ wird.", l: ["Transfer: Fußabdruck-Wissen auf ein konkretes Angebot anwenden", "Probleme: CO₂ entsteht sofort, Bindung durch Bäume dauert Jahrzehnte und ist unsicher (Brände, Abholzung)", "Qualität von Projekten schwer überprüfbar (Nähe zu Greenwashing)", "Fazit: Vermeiden vor Kompensieren"] },
     ],
   },
   J: {
     afb1: [
-      "Nenne zwei berühmte afrikanische Schutzgebiete und je eine geschützte Tierart.",
-      "Beschreibe, was mit „Fortress Conservation“ gemeint ist.",
-      "Nenne eine Gemeinschaft, die bei der Gründung von Nationalparks verdrängt wurde.",
-      "Beschreibe die Grundidee der gemeindebasierten Naturschutzarbeit.",
-      "Nenne ein Land, in dem sich Bestände durch gemeindebasierten Schutz erholt haben.",
+      { q: "Nenne den ungefähren wissenschaftlichen Konsens zum menschengemachten Klimawandel laut Abbildung 11.", l: ["97 % (Cook et al. 2013)", "Über 99 % (Powell 2019, Lynas et al. 2021)"] },
+      { q: "Beschreibe die Desinformationsstrategie „Zweifel säen“.", l: ["Tatsache wird nicht offen geleugnet", "Stattdessen wird gezielt Unsicherheit erzeugt („die Wissenschaft ist sich uneinig“)", "Ziel: kein Handlungsdruck; Motto: „Zweifel ist unser Produkt“"] },
+      { q: "Nenne ein typisches klimaskeptisches Argument aus Tabelle J2.", l: ["„Der Klimawandel ist natürlich.“", "„CO₂ ist nur ein winziger Anteil der Atmosphäre.“", "„Früher war es auch schon mal wärmer.“ / „Klimamodelle sind zu unzuverlässig.“"] },
+      { q: "Nenne, seit wann Exxon eigene Forschungsergebnisse zum Klimawandel besaß.", l: ["Seit den späten 1970er Jahren (Vortrag 1977)", "Ergebnisse stimmten sehr genau mit der späteren Entwicklung überein"] },
     ],
     afb2: [
-      "Erkläre, wie die koloniale Gründung eines Nationalparks und die Verdrängung lokaler Gemeinschaften zusammenhängen.",
-      "Erkläre, warum Naturschutz scheitern kann, wenn die lokale Bevölkerung nicht profitiert.",
-      "Vergleiche klassischen Nationalpark und gemeindebasierten Naturschutz am Beispiel einer Art.",
-      "Erkläre, warum das Bild der „unberührten Wildnis“ historisch unzutreffend ist.",
+      { q: "Erkläre die Parallelen zwischen den Desinformationsstrategien der fossilen Industrie und der Tabakindustrie.", l: ["Beide kannten die Gefahr aus eigener Forschung", "Beide erzeugten gezielt Zweifel statt offen zu leugnen", "Ziel jeweils: Regulierung verhindern, Geschäftsmodell schützen"] },
+      { q: "Erkläre den Unterschied zwischen wissenschaftlicher Unsicherheit und Klimaskeptizismus.", l: ["Unsicherheit: normale, benannte Spannbreiten (z. B. Kipppunkt-Schwellen)", "Kernaussagen trotzdem gesichert (Konsens > 99 %)", "Skeptizismus: stellt gesicherte Grundlagen infrage oder überbetont Unsicherheit"] },
+      { q: "Widerlege ein klimaskeptisches Argument aus Tabelle J2 mit konkreten Daten.", l: ["Z. B. „natürlich“ → Isotopenanalyse zeigt fossile Herkunft des CO₂ (Block B)", "„winziger Anteil“ → Spurengase <1 %, aber für 33 °C Treibhauseffekt verantwortlich; GWP (Block A)", "„früher wärmer“ → heutige Erwärmung ca. 10-mal schneller als natürliche Übergänge"] },
+      { q: "Werte Abbildung 11 aus: Wie hat sich der gemessene Konsens von 2013 bis 2021 entwickelt?", l: ["2013: 97 %, 2019 und 2021: über 99 %", "Konsens stabil hoch, leicht gestiegen", "Achtung: y-Achse beginnt bei 90 % → Unterschiede wirken größer", "Grundlage: Auswertung begutachteter Fachartikel, keine Umfrage"] },
     ],
     afb3: [
-      "Beurteile, ob Naturschutz in Afrika ohne Nutzen für die lokale Bevölkerung langfristig erfolgreich sein kann.",
-      "Beurteile, ob ehemalige Kolonialstaaten eine besondere Verantwortung für afrikanische Tierwelt tragen.",
-    ],
-    ki1: [
-      "Nenne die drei Perspektiven, aus denen man die KI zum Serengeti-Schutz befragen sollte.",
-      "Beschreibe, warum dieser Block als KI-Schwerpunktblock gilt.",
-      "Nenne einen Grund, warum eine KI bei kolonial geprägten Themen bestimmte Stimmen bevorzugt.",
-    ],
-    ki2: [
-      "Erkläre, wie sich die KI-Antwort zum Serengeti-Schutz zwischen der Massai-Perspektive und der Sicht einer Naturschutzorganisation unterscheidet.",
-      "Erkläre, warum KI zu Naturschutz in Afrika globalnördliche Stimmen systematisch bevorzugt.",
-    ],
-    ki3: [
-      "Beurteile, wie man einen KI-Prompt gestalten muss, damit alle Perspektiven auf den Serengeti-Schutz gleichberechtigt vorkommen.",
+      { q: "Beurteile am Beispiel der Kommentarspalte, welche Strategien der Desinformation dort erkennbar sind.", l: ["Freidenker_79: „Klima hat sich immer verändert“ → ignoriert Tempo", "M_Sunshine: Zahlen anzweifeln ohne Beleg → Zweifel säen", "wutbuerger2024: Whataboutism (Verhalten von Politikern statt Messdaten)", "Korrigierende Stimmen: faktenbasiert_kg, Lena_studiert"] },
+      { q: "Beurteile, warum sich Falschinformationen in sozialen Medien oft schneller verbreiten als wissenschaftliche Richtigstellungen.", l: ["Transfer: Desinformations-Wissen auf soziale Medien übertragen", "Falschmeldungen sind oft einfach, emotional, überraschend", "Algorithmen belohnen Reaktionen; Richtigstellungen sind komplexer", "Bestätigungsneigung: Infos, die zu eigener Meinung passen, werden eher geteilt"] },
+      { q: "Beurteile, ob Medien bei Klimathemen immer eine Gegenstimme einladen sollten, um „ausgewogen“ zu berichten.", l: ["Transfer: Konsens-Wissen auf Journalismus anwenden", "Problem „false balance“: 50:50-Darstellung bei über 99 % Konsens verzerrt die Wirklichkeit", "Ausgewogenheit sinnvoll bei echten Wertfragen (z. B. welche Maßnahmen)", "Urteil: Gewichtung sollte dem Stand der Forschung entsprechen"] },
     ],
   },
   K: {
     afb1: [
-      "Nenne zwei Chancen des Ökotourismus für Afrikas Tierwelt.",
-      "Nenne zwei Risiken des Ökotourismus für Afrikas Tierwelt.",
-      "Beschreibe, warum ein lebender Löwe wirtschaftlich wertvoller sein kann als ein gewilderter.",
-      "Nenne ein Land, das bewusst auf hochpreisigen, aufkommensschwachen Tourismus setzt.",
-      "Beschreibe, wie zu viele Safarifahrzeuge das Verhalten von Raubkatzen stören.",
+      { q: "Nenne die ungefähren CO₂-Emissionen pro Kopf für die USA, Deutschland und Mali (Abbildung 12).", l: ["USA: ca. 13,8 t", "Deutschland: ca. 7,0 t", "Mali: ca. 0,1 t (Weltdurchschnitt ca. 4,7 t)"] },
+      { q: "Beschreibe den Begriff Klimagerechtigkeit.", l: ["Ungleichheit zwischen Verursachern und Betroffenen des Klimawandels", "Frage, wer welche Verantwortung trägt (heute und historisch)", "Auch zwischen den Generationen"] },
+      { q: "Nenne das Jahr, in dem der „Loss and Damage“-Fonds beschlossen wurde.", l: ["2022 auf der COP27"] },
+      { q: "Nenne das Land mit den höchsten historischen Gesamtemissionen seit 1751.", l: ["USA (rund ein Viertel aller historischen Emissionen)", "Danach China; EU zusammen knapp ein Fünftel"] },
     ],
     afb2: [
-      "Erkläre, warum ein lebendes Tier durch Tourismus wertvoller sein kann als ein gewildertes.",
-      "Vergleiche hochpreisigen Tourismus (Botswana) mit Massentourismus hinsichtlich der Folgen für die Tierwelt.",
-      "Erkläre, warum nicht jedes Angebot, das sich „öko“ nennt, tierfreundlich ist.",
-      "Erkläre den Zusammenhang zwischen Tourismuseinnahmen und Naturschutzfinanzierung.",
+      { q: "Erkläre das Prinzip der „gemeinsamen, aber unterschiedlichen Verantwortung“ (CBDR).", l: ["Alle Länder tragen Verantwortung für den Klimaschutz", "Aber nicht im gleichen Maße", "Grund: unterschiedliche historische Emissionen und Möglichkeiten"] },
+      { q: "Erkläre den Zusammenhang zwischen historischen Emissionen und heutiger Verantwortung.", l: ["CO₂ bleibt lange in der Atmosphäre → heutige Erwärmung beruht auf früheren Emissionen", "Industrieländer haben den größten Teil ausgestoßen und davon wirtschaftlich profitiert", "Daraus leitet sich eine größere Verantwortung ab"] },
+      { q: "Erkläre die Aussage, dass ein Mensch in den USA in gut zwei Tagen so viel CO₂ verursacht wie ein Mensch in Mali im ganzen Jahr (Abbildung 12).", l: ["USA 13,8 t/Jahr, Mali ca. 0,1 t/Jahr", "13,8 t : 365 Tage ≈ 0,04 t pro Tag → ca. 2–3 Tage für 0,1 t", "Zeigt das extreme Ungleichgewicht der Pro-Kopf-Emissionen"] },
+      { q: "Werte Abbildung 12 aus: Wie groß ist der Unterschied zwischen dem höchsten und dem niedrigsten Wert?", l: ["Höchster Wert: USA 13,8 t, niedrigster: Mali ca. 0,1 t", "Faktor über 100", "China (9,2 t) liegt über Deutschland (7,0 t); Quelle OWID/GCP, territoriale Emissionen"] },
     ],
     afb3: [
-      "Beurteile, ob Ökotourismus insgesamt eher Chance oder Gefahr für Afrikas Tierwelt ist.",
-      "Bewerte, wem die Einnahmen aus dem Tierwelt-Tourismus zugutekommen sollten.",
-    ],
-    ki1: [
-      "Nenne einen Perspektiven-Prompt zum Ökotourismus aus Sicht einer Dorfgemeinschaft.",
-      "Beschreibe, wie sich das Bild des Ökotourismus je nach Befragtem ändern kann.",
-      "Nenne einen Grund, warum eine KI Ökotourismus zuerst positiv darstellt.",
-    ],
-    ki2: [
-      "Erkläre, wie sich eine KI-Antwort zum Ökotourismus zwischen der Sicht einer Reiseveranstalterin und einer Dorfgemeinschaft unterscheidet.",
-      "Erkläre, warum die Frage „gut oder schlecht?“ von der Perspektive abhängt.",
-    ],
-    ki3: [
-      "Beurteile, welche Perspektive eine allgemeine KI-Antwort zum Ökotourismus zuerst ausblendet.",
+      { q: "Beurteile, ob Deutschland eine besondere Verantwortung hat, den Globalen Süden finanziell zu unterstützen.", l: ["Pro: hohe Pro-Kopf- und historische Emissionen (EU knapp ein Fünftel), wirtschaftliche Stärke", "Pro: CBDR-Prinzip, Loss-and-Damage-Fonds", "Mögliche Gegenargumente: Haushaltsgrenzen, auch Schwellenländer in der Pflicht", "Begründetes Urteil"] },
+      { q: "Beurteile, warum aktuelle Pro-Kopf-Emissionen und historische Gesamtverantwortung zu unterschiedlichen Bewertungen führen können.", l: ["Aktuell: China hoch (9,2 t, größter Gesamtemittent)", "Historisch: USA und EU tragen den größten Anteil", "Je nach Maßstab verschiebt sich, wer „verantwortlich“ ist", "Urteil: faire Bewertung braucht beide Perspektiven"] },
+      { q: "Erörtere, ob individuelle Konsumentscheidungen oder politischer Systemwandel wirksamer für Klimagerechtigkeit sind.", l: ["Individuell: Vorbildwirkung, direkte Einsparung, aber begrenzte Reichweite", "Systemisch: Energie-, Verkehrs-, Handelspolitik wirken auf alle", "Beide Ebenen hängen zusammen (Nachfrage und Wählerverhalten)", "Abwägendes Fazit"] },
     ],
   },
   L: {
     afb1: [
-      "Nenne drei afrikanische Tierarten, die häufig in Konflikt mit Menschen geraten.",
-      "Beschreibe, warum Elefanten für Kleinbauern zur Bedrohung werden können.",
-      "Nenne eine Koexistenz-Methode gegen Elefantenschäden.",
-      "Beschreibe, wie die Bienenzaun-Methode funktioniert.",
-      "Nenne den Reizstoff, auf dem die Chili-Methode beruht.",
+      { q: "Nenne drei Treibhausgase, die in der Landwirtschaft eine besondere Rolle spielen, und ihre Quelle.", l: ["Methan (CH₄): Verdauung von Wiederkäuern, Nassreisanbau", "Lachgas (N₂O): stickstoffhaltiger Dünger", "CO₂: Rodung und Trockenlegung von Flächen"] },
+      { q: "Beschreibe, warum Rindfleisch einen hohen Treibhausgas-Fußabdruck hat.", l: ["Rinder sind Wiederkäuer: Mikroorganismen im Pansen erzeugen Methan", "Eine Milchkuh stößt ca. 100 kg Methan pro Jahr aus", "Dazu Futteranbau und Weideflächen (ggf. Rodung) → ca. 60 kg CO₂e pro kg"] },
+      { q: "Nenne zwei Auswirkungen des Klimawandels auf die Landwirtschaft.", l: ["Längere Dürren und Hitzewellen → Ernteausfälle (z. T. über 30 %)", "Veränderte Niederschlagsmuster", "Ernährungsunsicherheit, z. B. in der Sahelzone"] },
+      { q: "Beschreibe den „gefährlichen Kreislauf“ zwischen Klimawandel und Ernährung aus Infotext L2.", l: ["Klimawandel bedroht Ernten und Ernährung", "Um mehr Nahrung zu erzeugen, werden mehr Flächen/Dünger genutzt", "Das verursacht zusätzliche Emissionen → verstärkt den Klimawandel"] },
+      { q: "Nenne den Treibhausgas-Fußabdruck von Rindfleisch und Erbsen pro Kilogramm (Abbildung 13).", l: ["Rindfleisch: ca. 60 kg CO₂-Äquivalente", "Erbsen: ca. 1 kg CO₂-Äquivalente"] },
     ],
     afb2: [
-      "Erkläre, warum Mensch-Tier-Konflikte den Schutz einer Art erschweren.",
-      "Erkläre den biologischen Wirkmechanismus der Bienenzaun-Methode.",
-      "Vergleiche die Chili- und die Bienenzaun-Methode hinsichtlich Wirkprinzip und Grenzen.",
-      "Erkläre, warum Koexistenz-Methoden nur mit Einbindung der Bevölkerung funktionieren.",
+      { q: "Erkläre, warum die Landwirtschaft gleichzeitig Ursache und Opfer des Klimawandels ist.", l: ["Ursache: ca. ein Viertel bis ein Drittel der Emissionen (Methan, Lachgas, CO₂ aus Rodung)", "Opfer: wetterabhängig, Dürren und Hitze zerstören Ernten", "Beides verstärkt sich gegenseitig"] },
+      { q: "Vergleiche den Treibhausgas-Fußabdruck verschiedener Lebensmittel (Abbildung 13).", l: ["Tierisch hoch: Rind 60 kg, Lamm 24 kg, Käse 21 kg", "Mittel: Schwein 7 kg, Geflügel 6 kg", "Pflanzlich niedrig: Tofu 3 kg, Linsen 2 kg, Gemüse/Erbsen 1 kg", "Größter Hebel: Produkte von Wiederkäuern"] },
+      { q: "Erkläre, warum „regional einkaufen“ für die Klimabilanz meist weniger wichtig ist als die Art des Lebensmittels.", l: ["Transport macht meist nur einen kleinen Teil des Fußabdrucks aus", "Beispiel: Avocado-Schiffstransport nur ca. 1/12 des Fußabdrucks", "Entscheidend ist die Erzeugung (z. B. Rind vs. Erbsen)", "Quelle: Poore & Nemecek 2018, 38.000 Betriebe in 119 Ländern"] },
+      { q: "Erkläre, warum Lachgas aus der Landwirtschaft besonders problematisch ist.", l: ["Entsteht, wenn Bodenbakterien überschüssigen Stickstoffdünger umsetzen", "Treibhauspotenzial ca. 273 → wirksamstes der drei Agrargase", "Entsteht direkt aus Nahrungsmittelproduktion, lässt sich nicht einfach abschalten"] },
     ],
     afb3: [
-      "Beurteile, ob Menschen und große Wildtiere langfristig auf engem Raum koexistieren können.",
-      "Bewerte, wer für Schäden aufkommen sollte, die geschützte Wildtiere anrichten.",
-    ],
-    ki1: [
-      "Nenne einen Perspektiven-Prompt zum Elefanten-Konflikt aus Sicht einer betroffenen Bäuerin.",
-      "Beschreibe, wie die Perspektive beeinflusst, welche Lösung als akzeptabel gilt.",
-      "Nenne einen Grund, warum eine KI zuerst den Schutz der Tiere in den Vordergrund stellt.",
-    ],
-    ki2: [
-      "Erkläre, wie sich eine KI-Antwort zum Elefanten-Konflikt ändert, wenn man die Sicht einer betroffenen Bäuerin einnimmt.",
-      "Erkläre, warum bei Mensch-Tier-Konflikten die Sicherheit der Menschen und der Schutz der Art gegeneinanderstehen können.",
-    ],
-    ki3: [
-      "Beurteile, was der Perspektivwechsel beim Elefanten-Konflikt über die Grenzen allgemeiner KI-Antworten zeigt.",
+      { q: "Beurteile, ob der Fleischkonsum politisch stärker reguliert werden sollte.", l: ["Pro: großer Hebel (Rind 60 kg vs. Erbsen 1 kg CO₂e)", "Contra: Eingriff in persönliche Freiheit, Folgen für Landwirte", "Mögliche Instrumente: Steuern, Subventionen umlenken, Information", "Begründetes Urteil unter Abwägung"] },
+      { q: "Beurteile, ob Laborfleisch oder Insekten eine Lösung für die Klimabilanz der Ernährung sein könnten.", l: ["Transfer: Ernährungs-Wissen auf neue Produkte anwenden", "Chancen: kein Methan aus Wiederkäuern, weniger Fläche", "Offene Fragen: Energiebedarf, Akzeptanz, Kosten, Zulassung", "Urteil im Vergleich zu pflanzlichen Alternativen (bereits sehr niedrig)"] },
+      { q: "Bewerte, ob Landwirtinnen und Landwirte für den Klimaschutz stärker in die Pflicht genommen werden sollten, obwohl sie selbst besonders unter dem Klimawandel leiden.", l: ["Transfer: Doppelrolle Ursache/Opfer auf eine politische Frage anwenden", "Pro: hoher Emissionsanteil, Einsparpotenzial (Düngung, Tierhaltung)", "Contra: wirtschaftlicher Druck, Ernteausfälle, Ernährungssicherung", "Urteil: Unterstützung und Verpflichtung verbinden"] },
     ],
   },
 };
 
+const KI_QUESTIONS = {
+  afb1: [
+    { q: "Nenne die vier Schritte, mit denen ihr eine KI-Nutzung im KI-Dokumentationsblatt festhaltet.", l: ["Prompt", "Ergebnis", "Bewertung", "Überarbeitung"] },
+    { q: "Nenne drei Merkmale eines guten Prompts.", l: ["Klar und konkret formuliert", "Kontext/Zielgruppe angegeben (z. B. Klasse 9)", "Gewünschtes Format oder Umfang benannt"] },
+    { q: "Beschreibe, warum KI-Nutzung im Portfolio immer offen gekennzeichnet werden muss.", l: ["Ehrlichkeit: eigene Leistung und KI-Anteil unterscheidbar", "Nachvollziehbarkeit für Lehrkraft und Leser*innen", "Nicht gekennzeichnete KI-Nutzung gilt als schwerer Verstoß (Graduierungssystem)"] },
+    { q: "Nenne zwei Möglichkeiten, ein KI-Ergebnis zu überprüfen.", l: ["Abgleich mit seriösen Quellen (z. B. IPCC, UBA, DWD, Infotexte)", "Zahlen und Fakten mit Diagrammen des Materials vergleichen", "Nachfragen nach Quellen und diese prüfen"] },
+    { q: "Beschreibe, was mit „Bias“ bei einer KI-Antwort gemeint ist.", l: ["Verzerrung/Schieflage in der Antwort", "Z. B. einseitige Darstellung, versteckte Wertung, fehlende Perspektiven", "Entsteht u. a. durch Trainingsdaten und die Formulierung des Prompts"] },
+  ],
+  afb2: [
+    { q: "Erkläre an einem Beispiel aus eurer KI-Dokumentation, wie ihr einen Prompt schrittweise verbessert habt.", l: ["Konkretes Beispiel aus dem Portfolio nennen", "Was war am ersten Ergebnis unzureichend?", "Welche Änderung am Prompt (Präzisierung, Kontext, Format) und mit welchem Effekt?"] },
+    { q: "Erkläre, woran man erkennt, dass eine KI-Antwort zu einem kontroversen Klimathema eine versteckte Wertung enthält.", l: ["Wertende Wörter (z. B. „nur“, „angeblich“, „dramatisch“)", "Einseitige Auswahl von Argumenten oder Beispielen", "Fehlende Belege/Quellen, Meinung als Tatsache dargestellt"] },
+    { q: "Vergleiche die Antworten einer KI auf eine neutral formulierte und auf eine suggestive Frage zum Klimawandel.", l: ["Neutral: „Welche Belege gibt es …?“ → eher ausgewogene Antwort", "Suggestiv: „Warum ist der Klimawandel übertrieben?“ → KI übernimmt ggf. die Unterstellung", "Folgerung: Die Formulierung des Prompts beeinflusst die Antwort"] },
+    { q: "Erkläre, warum eine KI aktuelle Zahlen (z. B. den CO₂-Wert 2025) veraltet oder falsch angeben kann.", l: ["Trainingsdaten haben einen Stichtag", "KI erzeugt wahrscheinliche Texte, prüft Fakten nicht selbst", "Deshalb Zahlen immer mit aktueller Quelle (z. B. NOAA, DWD) abgleichen"] },
+    { q: "Erkläre, wie man prüfen kann, ob eine KI-Antwort zum CO₂-Fußabdruck individuelle und strukturelle Verantwortung ausgewogen darstellt.", l: ["Prüfen, ob nur Tipps für Einzelne genannt werden", "Prüfen, ob Politik, Industrie und Infrastruktur vorkommen", "Gezielt nachfragen und mit Infotext I1 (BP-Kampagne) vergleichen"] },
+    { q: "Erkläre, wie man eine KI-Antwort zur klimafreundlichen Ernährung auf Ausgewogenheit prüfen kann.", l: ["Werden Daten genannt (z. B. Poore & Nemecek) oder nur Meinungen?", "Wird bevormundend oder wertend formuliert?", "Werden Mythen wiederholt (z. B. „regional ist immer besser“)? → Abgleich mit Abb. 13"] },
+  ],
+  afb3: [
+    { q: "Bewerte, wie eine KI mit der Asymmetrie zwischen wissenschaftlichem Konsens und einer Minderheitsmeinung zum Klimawandel umgehen sollte.", l: ["Konsens über 99 % → sollte nicht als 50:50-Debatte dargestellt werden (false balance)", "Minderheitspositionen erwähnen, aber als solche kennzeichnen", "Prüfen: Stellt die KI tatsächlich so dar? Urteil begründen"] },
+    { q: "Bewerte, wie eine KI mit wissenschaftlicher Unsicherheit bei Klimakipppunkten umgeht.", l: ["Gut: Spannbreiten und Unsicherheit offen benennen", "Problematisch: Unsicherheit als Entwarnung oder als sichere Katastrophe darstellen", "Maßstab: Stand der Forschung (Abb. 7, Armstrong McKay 2022)", "Begründetes Urteil"] },
+    { q: "Beurteile, ob man eine KI im Portfolio wie ein Fachbuch als Quelle angeben darf.", l: ["KI ist keine Primärquelle: Inhalte nicht überprüfbar belegt, Antworten wechseln", "KI-Nutzung dokumentieren ja, Fakten aber mit echten Quellen belegen", "Fazit: KI als Werkzeug kennzeichnen, nicht als Beleg zitieren"] },
+    { q: "Beurteile, welche Gefahren entstehen, wenn Menschen KI-Antworten zu Klimafragen ungeprüft in sozialen Medien teilen.", l: ["Falsche oder veraltete Zahlen verbreiten sich weiter", "Einseitige Antworten wirken durch KI „objektiv“", "Verstärkung von Desinformation (Bezug Block J)", "Gegenmittel: Quellenprüfung, Kennzeichnung"] },
+  ],
+};
 
-const STORAGE_KEY = "tierwelt_pruefungstool_v1";
+
+const BLOCKS_META = {
+  A: { title: "Das Klimasystem", pflicht: true },
+  B: { title: "Klimawandel – Ursachen, Belege, Messdaten", pflicht: true },
+  C: { title: "Folgen des Klimawandels", pflicht: true },
+  D: { title: "Klimawandel in Deutschland", pflicht: false },
+  E: { title: "Klimawandel in Afrika", pflicht: false },
+  F: { title: "Artensterben und Kipppunkte", pflicht: false },
+  G: { title: "Erneuerbare Energien", pflicht: false },
+  H: { title: "Klimapolitik und internationale Abkommen", pflicht: false },
+  I: { title: "Mein CO₂-Fußabdruck", pflicht: false },
+  J: { title: "Klimaskeptizismus und Desinformation", pflicht: false },
+  K: { title: "Klimagerechtigkeit und globale Verantwortung", pflicht: false },
+  L: { title: "Landwirtschaft, Ernährung und Klimawandel", pflicht: false },
+};
+const PFLICHT = ["A", "B", "C"];
+const WAHL = ["D", "E", "F", "G", "H", "I", "J", "K", "L"];
+const AFBS = ["afb1", "afb2", "afb3"];
+const AFB_LABEL = { afb1: "AFB I", afb2: "AFB II", afb3: "AFB III" };
+const AFB_LONG = { afb1: "AFB I – Wiedergeben & beschreiben", afb2: "AFB II – Anwenden & strukturieren", afb3: "AFB III – Transferieren & beurteilen" };
+const AFB_COLOR = { afb1: "#1A3A5C", afb2: "#2E7D32", afb3: "#E65100" };
+const TOTAL_FACH = 20;
+const DEFAULT_PFLICHT = 7;
+
+const PRESETS = {
+  g: { label: "G-Kurs", pct: { afb1: 50, afb2: 40, afb3: 10 } },
+  gemischt: { label: "Gemischte Gruppe", pct: { afb1: 40, afb2: 45, afb3: 15 } },
+  e: { label: "E-Kurs", pct: { afb1: 35, afb2: 45, afb3: 20 } },
+};
+
 const RATINGS = ["++", "+", "0", "-", "--"];
-const FACH_AFB = ["afb1", "afb2", "afb3"];
-const KI_AFB = ["ki1", "ki2", "ki3"];
-const ALL_AFB = ["afb1", "afb2", "afb3", "ki1", "ki2", "ki3"];
-const AFB_LABEL = { afb1: "AFB I", afb2: "AFB II", afb3: "AFB III", ki1: "KI · AFB I", ki2: "KI · AFB II", ki3: "KI · AFB III" };
-// AFB-Zuordnung für die Auswertung (KI zählt in dieselbe AFB-Stufe wie die Fachfragen)
-const AFB_GROUP = { afb1: "afb1", afb2: "afb2", afb3: "afb3", ki1: "afb1", ki2: "afb2", ki3: "afb3" };
-const IS_KI = { afb1: false, afb2: false, afb3: false, ki1: true, ki2: true, ki3: true };
+const STORAGE_KEY = "pruefungstool-data";
 
 let state = { groups: [] };
 let openPanels = {};
 let draft = {};
+let deleteArmed = {};
 
-function defaultDraft() {
-  return {
-    blocks: new Set(),
-    counts: { afb1: 4, afb2: 3, afb3: 1 },   // Fachfragen (unverändert)
-    kiCounts: { ki1: 3, ki2: 2, ki3: 1 },     // KI-Fragen (neu)
-    drawn: null,
-    ratings: {},
-  };
+// ============================== HILFSFUNKTIONEN ==============================
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+function uid() { return "g" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function fmtDate(ts) { return new Date(ts).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }); }
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+function findGroup(id) { return state.groups.find((g) => g.id === id); }
+
+function newDraft() {
+  return { wahl: new Set(), preset: "gemischt", pct: { ...PRESETS.gemischt.pct }, pflichtCount: DEFAULT_PFLICHT, items: null, ratings: {}, openSol: new Set() };
+}
+
+// Größte-Reste-Verfahren: verteilt "total" proportional zu "weights" auf ganze Zahlen
+function apportion(total, weights, caps) {
+  const keys = Object.keys(weights);
+  const sum = keys.reduce((s, k) => s + weights[k], 0) || 1;
+  const raw = {}, res = {};
+  keys.forEach((k) => { raw[k] = (total * weights[k]) / sum; res[k] = Math.floor(raw[k]); });
+  let rest = total - keys.reduce((s, k) => s + res[k], 0);
+  const order = keys.slice().sort((a, b) => (raw[b] - res[b]) - (raw[a] - res[a]));
+  let i = 0;
+  while (rest > 0 && i < order.length * 3) {
+    const k = order[i % order.length];
+    if (!caps || res[k] < caps[k]) { res[k]++; rest--; }
+    i++;
+  }
+  if (caps) keys.forEach((k) => { res[k] = Math.min(res[k], caps[k]); });
+  return res;
+}
+
+function pctSum(pct) { return AFBS.reduce((s, a) => s + (Number(pct[a]) || 0), 0); }
+function afbCounts(pct) { return apportion(TOTAL_FACH, { afb1: pct.afb1, afb2: pct.afb2, afb3: pct.afb3 }); }
+function presetLabel(d) {
+  const match = Object.entries(PRESETS).find(([, p]) => AFBS.every((a) => p.pct[a] === d.pct[a]));
+  return match ? match[1].label : "Individuell";
+}
+
+// ============================== ZIEHUNG ==============================
+
+function poolEntries(blocks, afb, used) {
+  const list = [];
+  blocks.forEach((b) => QUESTIONS[b][afb].forEach((x, idx) => {
+    const key = `${b}-${afb}-${idx}`;
+    if (!used.has(key)) list.push({ key, block: b, afb, idx });
+  }));
+  return list;
+}
+function makeItem(e, ki) {
+  const src = ki ? KI_QUESTIONS[e.afb][e.idx] : QUESTIONS[e.block][e.afb][e.idx];
+  return { id: uid(), key: e.key, block: ki ? "KI" : e.block, afb: e.afb, ki: !!ki, idx: e.idx, q: src.q, l: src.l };
+}
+
+function drawQuestions(groupId) {
+  const d = draft[groupId];
+  if (pctSum(d.pct) !== 100) { showToast("Die AFB-Anteile müssen zusammen 100 % ergeben"); return; }
+  const counts = afbCounts(d.pct);
+  const wahl = [...d.wahl];
+  const pflichtTarget = wahl.length ? Math.min(d.pflichtCount, TOTAL_FACH) : TOTAL_FACH;
+  const pfCaps = {}; AFBS.forEach((a) => { pfCaps[a] = counts[a]; });
+  const pflichtPerAfb = apportion(pflichtTarget, { afb1: counts.afb1, afb2: counts.afb2, afb3: counts.afb3 }, pfCaps);
+
+  const used = new Set();
+  const usage = {}; wahl.forEach((b) => { usage[b] = 0; });
+  const items = [];
+  let shortage = 0;
+
+  AFBS.forEach((afb) => {
+    // 1) Pflichtanteil: zufällig über A–C (nicht zwingend aus jedem Block)
+    const pfPool = shuffle(poolEntries(PFLICHT, afb, used));
+    const takePf = Math.min(pflichtPerAfb[afb], pfPool.length);
+    for (let i = 0; i < takePf; i++) { used.add(pfPool[i].key); items.push(makeItem(pfPool[i])); }
+    // 2) Rest aus den gewählten Wahlblöcken, gleichmäßig verteilt
+    let need = counts[afb] - takePf;
+    while (need > 0 && wahl.length) {
+      const candidates = shuffle(wahl.filter((b) => poolEntries([b], afb, used).length > 0));
+      if (!candidates.length) break;
+      const minUse = Math.min(...candidates.map((b) => usage[b]));
+      const b = candidates.find((x) => usage[x] === minUse);
+      const pick = shuffle(poolEntries([b], afb, used))[0];
+      used.add(pick.key); usage[b]++; items.push(makeItem(pick)); need--;
+    }
+    // 3) Falls Wahlblöcke nicht reichen: mit Pflichtblöcken auffüllen
+    if (need > 0) {
+      const fill = shuffle(poolEntries(PFLICHT, afb, used));
+      for (let i = 0; i < Math.min(need, fill.length); i++) { used.add(fill[i].key); items.push(makeItem(fill[i])); }
+      need -= Math.min(need, fill.length);
+    }
+    shortage += need;
+  });
+
+  // KI: genau eine Frage je AFB
+  AFBS.forEach((afb) => {
+    const pool = KI_QUESTIONS[afb].map((x, idx) => ({ key: `KI-${afb}-${idx}`, afb, idx }));
+    const pick = shuffle(pool)[0];
+    items.push(makeItem(pick, true));
+  });
+
+  d.items = items;
+  d.ratings = {};
+  d.openSol = new Set();
+  d.drawnWith = { label: presetLabel(d), pct: { ...d.pct }, counts, pflichtCount: pflichtTarget };
+  render();
+  if (shortage > 0) showToast(`Hinweis: ${shortage} Frage(n) fehlen – Pool der gewählten Blöcke zu klein`);
+}
+
+function swapItem(groupId, itemId) {
+  const d = draft[groupId];
+  const pos = d.items.findIndex((it) => it.id === itemId);
+  if (pos < 0) return;
+  const it = d.items[pos];
+  const used = new Set(d.items.map((x) => x.key));
+  let pool;
+  if (it.ki) {
+    pool = KI_QUESTIONS[it.afb].map((x, idx) => ({ key: `KI-${it.afb}-${idx}`, afb: it.afb, idx })).filter((e) => !used.has(e.key));
+  } else if (PFLICHT.includes(it.block)) {
+    pool = poolEntries(PFLICHT, it.afb, used);
+  } else {
+    pool = poolEntries([it.block], it.afb, used);
+    if (!pool.length) pool = poolEntries([...d.wahl], it.afb, used);
+  }
+  if (!pool.length) { showToast("Keine weitere passende Frage im Pool"); return; }
+  const pick = shuffle(pool)[0];
+  const neu = makeItem(pick, it.ki);
+  d.items[pos] = neu;
+  delete d.ratings[itemId];
+  render();
+}
+
+// ============================== EINSTELLUNGEN ==============================
+
+function togglePanel(groupId, panel) {
+  openPanels[groupId] = openPanels[groupId] === panel ? null : panel;
+  if (panel === "neu" && !draft[groupId]) draft[groupId] = newDraft();
+  render();
+}
+function toggleWahl(groupId, letter) {
+  const d = draft[groupId];
+  if (d.wahl.has(letter)) d.wahl.delete(letter); else d.wahl.add(letter);
+  render();
+}
+function applyPreset(groupId, key) {
+  const d = draft[groupId];
+  d.preset = key; d.pct = { ...PRESETS[key].pct };
+  render();
+}
+function setPct(groupId, afb, value) {
+  const d = draft[groupId];
+  d.pct[afb] = Math.max(0, Math.min(100, parseInt(value, 10) || 0));
+  updateCalc(groupId);
+}
+function setPflicht(groupId, value) {
+  const d = draft[groupId];
+  d.pflichtCount = Math.max(1, Math.min(TOTAL_FACH, parseInt(value, 10) || DEFAULT_PFLICHT));
+}
+function updateCalc(groupId) {
+  const d = draft[groupId];
+  const el = document.getElementById(`calc-${groupId}`);
+  const pl = document.getElementById(`plabel-${groupId}`);
+  if (pl) pl.textContent = presetLabel(d);
+  document.querySelectorAll(`[data-preset-group="${groupId}"]`).forEach((btn) => {
+    btn.classList.toggle("active", presetLabel(d) === PRESETS[btn.dataset.key].label);
+  });
+  if (!el) return;
+  const sum = pctSum(d.pct);
+  if (sum !== 100) {
+    el.className = "calc warn";
+    el.textContent = `Summe: ${sum} % – bitte auf 100 % anpassen`;
+  } else {
+    const c = afbCounts(d.pct);
+    el.className = "calc";
+    el.textContent = `→ ${c.afb1} × AFB I · ${c.afb2} × AFB II · ${c.afb3} × AFB III (= 20 Fachfragen)`;
+  }
+}
+
+function setSol(groupId, itemId, isOpen) {
+  const d = draft[groupId];
+  if (!d) return;
+  if (isOpen) d.openSol.add(itemId); else d.openSol.delete(itemId);
+}
+
+function setRating(groupId, itemId, value) {
+  const d = draft[groupId];
+  d.ratings[itemId] = d.ratings[itemId] === value ? undefined : value;
+  render();
 }
 
 // ============================== AUSWERTUNG ==============================
@@ -537,74 +649,67 @@ function gradeSuggestion(avg) {
   if (avg <= 4.5) return "ausreichend (4)";
   return "mangelhaft (5)";
 }
-
-function collectRatedEntries(entries) { return entries.filter((e) => e.rating); }
+function avgOf(list) { return list.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / list.length; }
 
 function renderAuswertung(entries) {
-  const rated = collectRatedEntries(entries);
+  const rated = entries.filter((e) => e.rating);
   if (!rated.length) {
-    return '<div class="auswertung"><h5>Grafische Auswertung</h5><p style="color:var(--muted);font-size:0.85rem;margin:0;">Noch keine Fragen bewertet.</p></div>';
+    return `<div class="auswertung"><h5>Grafische Auswertung</h5><p style="color:var(--muted);font-size:0.85rem;margin:0;">Noch keine Fragen bewertet.</p></div>`;
   }
   const counts = { "++": 0, "+": 0, "0": 0, "-": 0, "--": 0 };
   rated.forEach((e) => counts[e.rating]++);
   const max = Math.max(...Object.values(counts), 1);
-
   let bars = "";
   RATINGS.forEach((r) => {
-    const c = counts[r];
-    const pct = (c / max) * 100;
-    bars += '<div class="chart-row"><span class="rlabel">' + r + '</span>' +
-      '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%; background:' + RATING_COLORS[r] + ';"></div></div>' +
-      '<span class="rcount">' + c + '</span></div>';
+    bars += `<div class="chart-row"><span class="rlabel">${r}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${(counts[r] / max) * 100}%; background:${RATING_COLORS[r]};"></div></div>
+      <span class="rcount">${counts[r]}</span></div>`;
   });
-
-  const avgOverall = rated.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / rated.length;
-
-  // Per-AFB breakdown (Fach + KI zusammengefasst je Stufe)
-  const afbGroups = { afb1: [], afb2: [], afb3: [] };
-  rated.forEach((e) => afbGroups[AFB_GROUP[e.afb]].push(e));
-  const afbLabels = { afb1: "AFB I", afb2: "AFB II", afb3: "AFB III" };
-  const afbColors = { afb1: "#1A3A5C", afb2: "#2E7D32", afb3: "#E65100" };
+  const avgAll = avgOf(rated);
   let afbHtml = "";
-  Object.entries(afbGroups).forEach(([afb, list]) => {
+  AFBS.forEach((afb) => {
+    const list = rated.filter((e) => e.afb === afb);
     if (!list.length) return;
-    const avg = list.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / list.length;
-    afbHtml += '<span><span class="tag" style="background:' + afbColors[afb] + ';color:#fff;">' + afbLabels[afb] + '</span>Ø ' + avg.toFixed(1) + ' (' + gradeSuggestion(avg) + ')</span>';
+    const a = avgOf(list);
+    afbHtml += `<span><span class="tag" style="background:${AFB_COLOR[afb]};color:#fff;">${AFB_LABEL[afb]}</span>Ø ${a.toFixed(1)} (${gradeSuggestion(a)})</span>`;
   });
-
-  // Separater KI-Block (nur KI-Fragen)
-  const kiRated = rated.filter((e) => IS_KI[e.afb]);
-  let kiHtml = "";
-  if (kiRated.length) {
-    const kiAvg = kiRated.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / kiRated.length;
-    kiHtml = '<div style="margin-top:0.5rem;"><span class="tag" style="background:#7B1FA2;color:#fff;">KI-Kompetenz</span> ' +
-      kiRated.length + ' Fragen · Ø ' + kiAvg.toFixed(1) + ' (' + gradeSuggestion(kiAvg) + ')</div>';
+  const kiList = rated.filter((e) => e.ki);
+  if (kiList.length) {
+    const a = avgOf(kiList);
+    afbHtml += `<span><span class="tag" style="background:#7B1FA2;color:#fff;">KI</span>Ø ${a.toFixed(1)} (${gradeSuggestion(a)})</span>`;
   }
-
-  return '<div class="auswertung"><h5>Grafische Auswertung (' + rated.length + ' von ' + entries.length + ' Fragen bewertet)</h5>' +
-    bars +
-    '<div class="grade-suggestion">Gesamtdurchschnitt: <strong>' + avgOverall.toFixed(2) + '</strong> &rarr; Notenvorschlag: <strong>' + gradeSuggestion(avgOverall) + '</strong></div>' +
-    '<div class="afb-breakdown">' + afbHtml + '</div>' + kiHtml +
-    '<div class="disclaimer">Nur ein rechnerischer Vorschlag auf Basis der Ampel-Bewertungen – ersetzt nicht die fachliche Einschätzung der Lehrkraft und ist von der Notengebung der Reihe (Portfolio/KI-Doku/Mitarbeit, siehe Masterdokument Abschnitt 5) zu unterscheiden.</div></div>';
+  return `<div class="auswertung">
+    <h5>Grafische Auswertung (${rated.length} von ${entries.length} Fragen bewertet)</h5>
+    ${bars}
+    <div class="grade-suggestion">Gesamtdurchschnitt: <strong>${avgAll.toFixed(2)}</strong> &rarr; Notenvorschlag: <strong>${gradeSuggestion(avgAll)}</strong></div>
+    <div class="afb-breakdown">${afbHtml}</div>
+    <div class="disclaimer">Rechnerischer Vorschlag auf Basis der Bewertungen – ersetzt nicht die fachliche Einschätzung der Lehrkraft. KI-Fragen sind in ihrer AFB-Stufe enthalten und zusätzlich separat ausgewiesen. Das Prüfungsgespräch zählt 70 % der Reihennote (Masterdokument, Abschnitt 5).</div>
+  </div>`;
 }
 
-function currentDraftEntries(groupId) {
+function draftEntries(groupId) {
   const d = draft[groupId];
-  if (!d || !d.drawn) return [];
-  const entries = [];
-  Object.entries(d.drawn).forEach(([letter, afbSets]) => {
-    ALL_AFB.forEach((afb) => {
-      (afbSets[afb] || []).forEach((q, i) => {
-        const key = letter + "-" + afb + "-" + i;
-        entries.push({ block: letter, afb, question: q, rating: d.ratings[key] || null });
-      });
-    });
-  });
-  return entries;
+  if (!d || !d.items) return [];
+  return d.items.map((it) => ({ block: it.block, afb: it.afb, ki: it.ki, question: it.q, rating: d.ratings[it.id] || null }));
 }
 
-function uid() { return "g" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
-function fmtDate(ts) { return new Date(ts).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }); }
+function finishExam(groupId) {
+  const g = findGroup(groupId);
+  const d = draft[groupId];
+  if (!d || !d.items) return;
+  g.history.unshift({
+    ts: Date.now(),
+    blocks: [...PFLICHT, ...[...d.wahl].sort()],
+    niveau: d.drawnWith,
+    entries: draftEntries(groupId),
+  });
+  draft[groupId] = newDraft();
+  openPanels[groupId] = null;
+  saveState(); render();
+  showToast(`Prüfung für ${g.name} gespeichert`);
+}
+
+// ============================== SPEICHERN ==============================
 
 function loadState() {
   try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) state = JSON.parse(raw); }
@@ -615,13 +720,6 @@ function saveState() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
   catch (e) { showToast("Speichern fehlgeschlagen"); }
 }
-function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg; t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 1800);
-}
-function findGroup(id) { return state.groups.find((g) => g.id === id); }
-
 function addGroup() {
   const input = document.getElementById("newGroupName");
   const name = input.value.trim();
@@ -629,70 +727,8 @@ function addGroup() {
   state.groups.push({ id: uid(), name, history: [] });
   input.value = "";
   saveState(); render();
-  showToast("„" + name + "“ angelegt");
+  showToast(`„${name}“ angelegt`);
 }
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-  return a;
-}
-
-function togglePanel(groupId, panel) {
-  openPanels[groupId] = openPanels[groupId] === panel ? null : panel;
-  if (openPanels[groupId] === "neu" && !draft[groupId]) draft[groupId] = defaultDraft();
-  render();
-}
-
-function toggleBlock(groupId, letter) {
-  const d = draft[groupId];
-  if (d.blocks.has(letter)) d.blocks.delete(letter); else d.blocks.add(letter);
-  render();
-}
-
-function drawQuestions(groupId) {
-  const d = draft[groupId];
-  if (d.blocks.size === 0) { showToast("Wähle mindestens einen Block aus"); return; }
-  const drawn = {};
-  d.blocks.forEach((letter) => {
-    const pool = QUESTIONS[letter];
-    drawn[letter] = {
-      afb1: shuffle(pool.afb1).slice(0, Math.min(d.counts.afb1, pool.afb1.length)),
-      afb2: shuffle(pool.afb2).slice(0, Math.min(d.counts.afb2, pool.afb2.length)),
-      afb3: shuffle(pool.afb3).slice(0, Math.min(d.counts.afb3, pool.afb3.length)),
-      ki1: shuffle(pool.ki1).slice(0, Math.min(d.kiCounts.ki1, pool.ki1.length)),
-      ki2: shuffle(pool.ki2).slice(0, Math.min(d.kiCounts.ki2, pool.ki2.length)),
-      ki3: shuffle(pool.ki3).slice(0, Math.min(d.kiCounts.ki3, pool.ki3.length)),
-    };
-  });
-  d.drawn = drawn;
-  d.ratings = {};
-  render();
-}
-
-function setRating(groupId, key, value) { draft[groupId].ratings[key] = value; render(); }
-
-function finishExam(groupId) {
-  const g = findGroup(groupId);
-  const d = draft[groupId];
-  if (!d || !d.drawn) return;
-  const entries = [];
-  Object.entries(d.drawn).forEach(([letter, afbSets]) => {
-    ALL_AFB.forEach((afb) => {
-      (afbSets[afb] || []).forEach((q, i) => {
-        const key = letter + "-" + afb + "-" + i;
-        entries.push({ block: letter, afb, question: q, rating: d.ratings[key] || null });
-      });
-    });
-  });
-  g.history.unshift({ ts: Date.now(), blocks: [...d.blocks], entries });
-  draft[groupId] = defaultDraft();
-  openPanels[groupId] = null;
-  saveState(); render();
-  showToast("Prüfung für " + g.name + " gespeichert");
-}
-
-let deleteArmed = {};
 function deleteGroup(groupId) {
   if (!deleteArmed[groupId]) {
     deleteArmed[groupId] = true; render();
@@ -702,12 +738,11 @@ function deleteGroup(groupId) {
   state.groups = state.groups.filter((g) => g.id !== groupId);
   saveState(); render();
 }
-
 function exportData() {
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url; a.download = "Pruefungstool_Tierwelt_Backup_" + new Date().toISOString().slice(0, 10) + ".json";
+  a.href = url; a.download = `Pruefungstool_Klima_Backup_${new Date().toISOString().slice(0, 10)}.json`;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
   showToast("Backup heruntergeladen");
@@ -727,78 +762,89 @@ function importData(file) {
 
 // ============================== RENDER ==============================
 
-function afbClass(afb) { return IS_KI[afb] ? "ki" : afb; }
+function renderQbox(g, it) {
+  const d = draft[g.id];
+  const cls = it.ki ? "ki" : it.afb;
+  const label = it.ki ? `KI-Kompetenz · ${AFB_LABEL[it.afb]}` : `${AFB_LABEL[it.afb]} · Block ${it.block} – ${esc(BLOCKS_META[it.block].title)}`;
+  const current = d.ratings[it.id];
+  return `<div class="qbox ${cls}">
+    <div class="qhead"><div class="qlabel">${label}</div>
+      <button class="swap" title="Diese Frage durch eine andere passende ersetzen" onclick="swapItem('${g.id}','${it.id}')">&#8635; tauschen</button></div>
+    <div class="qtext">${esc(it.q)}</div>
+    <details class="loesung" ${d.openSol.has(it.id) ? "open" : ""} ontoggle="setSol('${g.id}','${it.id}',this.open)"><summary>Lösung anzeigen</summary><ul>${it.l.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></details>
+    <div class="rating">${RATINGS.map((r) => `<button class="${current === r ? "active" : ""}" onclick="setRating('${g.id}','${it.id}','${r}')">${r}</button>`).join("")}</div>
+  </div>`;
+}
 
 function renderNeuPanel(g) {
   const d = draft[g.id];
-  let html = '<div class="panel"><h4>Neue Prüfung – Blöcke auswählen</h4><div class="block-grid">';
-  Object.entries(BLOCKS_META).forEach(([letter, meta]) => {
-    const checked = d.blocks.has(letter) ? "checked" : "";
-    html += '<label class="block-check ' + (meta.pflicht ? "pflicht" : "") + '">' +
-      '<input type="checkbox" ' + checked + ' onchange="toggleBlock(\'' + g.id + '\',\'' + letter + '\')"> ' + letter + ' – ' + meta.title + '</label>';
-  });
-  html += '</div>' +
-    '<div class="num-row">Fachfragen pro Block: ' +
-      'AFB I <input type="number" min="0" max="8" value="' + d.counts.afb1 + '" onchange="draft[\'' + g.id + '\'].counts.afb1=parseInt(this.value||0,10)"> ' +
-      'AFB II <input type="number" min="0" max="6" value="' + d.counts.afb2 + '" onchange="draft[\'' + g.id + '\'].counts.afb2=parseInt(this.value||0,10)"> ' +
-      'AFB III <input type="number" min="0" max="3" value="' + d.counts.afb3 + '" onchange="draft[\'' + g.id + '\'].counts.afb3=parseInt(this.value||0,10)">' +
-    '</div>' +
-    '<div class="num-row ki-row"><strong>KI-Fragen pro Block:</strong> ' +
-      'AFB I <input type="number" min="0" max="3" value="' + d.kiCounts.ki1 + '" onchange="draft[\'' + g.id + '\'].kiCounts.ki1=parseInt(this.value||0,10)"> ' +
-      'AFB II <input type="number" min="0" max="3" value="' + d.kiCounts.ki2 + '" onchange="draft[\'' + g.id + '\'].kiCounts.ki2=parseInt(this.value||0,10)"> ' +
-      'AFB III <input type="number" min="0" max="3" value="' + d.kiCounts.ki3 + '" onchange="draft[\'' + g.id + '\'].kiCounts.ki3=parseInt(this.value||0,10)">' +
-    '</div>' +
-    '<div style="margin:0.7rem 0;"><button class="btn-primary" onclick="drawQuestions(\'' + g.id + '\')">Fragen auslosen</button> ' +
-    (d.drawn ? '<button class="btn-ghost btn-small" onclick="drawQuestions(\'' + g.id + '\')">Neu mischen</button>' : "") +
-    '</div>';
+  let html = `<div class="panel"><h4>Neue Prüfung</h4>`;
 
-  if (d.drawn) {
-    Object.entries(d.drawn).forEach(([letter, afbSets]) => {
-      html += '<div class="block-heading">Block ' + letter + ' – ' + BLOCKS_META[letter].title + '</div>';
-      const hasFach = FACH_AFB.some((a) => (afbSets[a] || []).length);
-      const hasKi = KI_AFB.some((a) => (afbSets[a] || []).length);
-      if (hasFach) {
-        html += '<div class="sub-heading fach">Inhaltliche Fragen</div>';
-        FACH_AFB.forEach((afb) => {
-          (afbSets[afb] || []).forEach((q, i) => { html += renderQBox(g.id, d, letter, afb, q, i); });
-        });
-      }
-      if (hasKi) {
-        html += '<div class="sub-heading ki">KI-Kompetenz-Fragen</div>';
-        KI_AFB.forEach((afb) => {
-          (afbSets[afb] || []).forEach((q, i) => { html += renderQBox(g.id, d, letter, afb, q, i); });
-        });
-      }
+  // Blöcke
+  html += `<div class="section"><div class="section-title">1 · Bearbeitete Blöcke</div><div class="block-grid">`;
+  PFLICHT.forEach((b) => {
+    html += `<label class="block-check pflicht fixed"><input type="checkbox" checked disabled> ${b} – ${esc(BLOCKS_META[b].title)}</label>`;
+  });
+  WAHL.forEach((b) => {
+    html += `<label class="block-check"><input type="checkbox" ${d.wahl.has(b) ? "checked" : ""} onchange="toggleWahl('${g.id}','${b}')"> ${b} – ${esc(BLOCKS_META[b].title)}</label>`;
+  });
+  html += `</div><p class="hint">A–C sind immer im Pool. Gewählte Wahlblöcke: <strong>${d.wahl.size}</strong> (üblich: 4).</p></div>`;
+
+  // Niveau
+  html += `<div class="section"><div class="section-title">2 · Anspruchsniveau (AFB-Anteile) – aktuell: <span id="plabel-${g.id}">${presetLabel(d)}</span></div>
+    <div class="presets">${Object.entries(PRESETS).map(([k, p]) =>
+      `<button data-preset-group="${g.id}" data-key="${k}" class="${presetLabel(d) === p.label ? "active" : ""}" onclick="applyPreset('${g.id}','${k}')">${p.label} (${p.pct.afb1}/${p.pct.afb2}/${p.pct.afb3})</button>`).join("")}</div>
+    <div class="num-row">
+      AFB I <input type="number" min="0" max="100" step="5" value="${d.pct.afb1}" oninput="setPct('${g.id}','afb1',this.value)"> %
+      AFB II <input type="number" min="0" max="100" step="5" value="${d.pct.afb2}" oninput="setPct('${g.id}','afb2',this.value)"> %
+      AFB III <input type="number" min="0" max="100" step="5" value="${d.pct.afb3}" oninput="setPct('${g.id}','afb3',this.value)"> %
+    </div>
+    <div id="calc-${g.id}" class="calc"></div></div>`;
+
+  // Pflichtanteil
+  html += `<div class="section"><div class="section-title">3 · Zusammensetzung</div>
+    <div class="num-row">Davon aus den Pflichtblöcken A–C: <input type="number" min="1" max="20" value="${d.pflichtCount}" onchange="setPflicht('${g.id}',this.value)"> von 20 Fachfragen</div>
+    <p class="hint">Der Pflichtanteil wird zufällig über A–C gezogen (nicht zwingend aus jedem Block), der Rest gleichmäßig aus den gewählten Wahlblöcken. Zusätzlich: 3 KI-Fragen (je eine pro AFB-Stufe).</p></div>`;
+
+  html += `<div style="margin:0.7rem 0;"><button class="btn-primary" onclick="drawQuestions('${g.id}')">${d.items ? "Neu auslosen" : "Fragen auslosen"}</button></div>`;
+
+  if (d.items) {
+    const dw = d.drawnWith;
+    html += `<p class="hint" style="margin-bottom:0.4rem;">Gezogen mit: <strong>${dw.label}</strong> (${dw.pct.afb1}/${dw.pct.afb2}/${dw.pct.afb3} %), ${dw.pflichtCount} Pflichtfragen aus A–C.</p>`;
+    AFBS.forEach((afb) => {
+      const list = d.items.filter((it) => !it.ki && it.afb === afb);
+      if (!list.length) return;
+      html += `<div class="afb-heading" style="color:${AFB_COLOR[afb]};">${AFB_LONG[afb]} (${list.length})</div>`;
+      list.forEach((it) => { html += renderQbox(g, it); });
     });
-    html += '<div style="margin-top:1rem;"><button class="btn-primary" onclick="finishExam(\'' + g.id + '\')">Prüfung abschließen &amp; speichern</button></div>';
+    const ki = d.items.filter((it) => it.ki);
+    html += `<div class="afb-heading" style="color:#7B1FA2;">KI-Kompetenz (Level 1 + 2) (${ki.length})</div>`;
+    ki.forEach((it) => { html += renderQbox(g, it); });
+    html += `<div style="margin-top:1rem;"><button class="btn-primary" onclick="finishExam('${g.id}')">Prüfung abschließen &amp; speichern</button></div>`;
+    html += renderAuswertung(draftEntries(g.id));
   }
-  html += renderAuswertung(currentDraftEntries(g.id));
-  html += '</div>';
+  html += `</div>`;
   return html;
 }
 
-function renderQBox(gid, d, letter, afb, q, i) {
-  const key = letter + "-" + afb + "-" + i;
-  const current = d.ratings[key];
-  return '<div class="qbox ' + afbClass(afb) + '">' +
-    '<div class="qlabel">' + AFB_LABEL[afb] + '</div>' +
-    '<div class="qtext">' + q + '</div>' +
-    '<div class="rating">' + RATINGS.map((r) => '<button class="' + (current === r ? "active" : "") + '" onclick="setRating(\'' + gid + '\',\'' + key + '\',\'' + r + '\')">' + r + '</button>').join("") + '</div>' +
-    '</div>';
-}
+function entryBlock(e) { return e.ki ? "KI" : e.block; }
+function entryAfb(e) { return e.afb === "afb1" ? "I" : e.afb === "afb2" ? "II" : "III"; }
 
 function renderVerlaufPanel(g) {
-  if (!g.history.length) return '<div class="panel"><div class="hist-empty">Noch keine Prüfung gespeichert.</div></div>';
-  let html = '<div class="panel"><h4>Verlauf</h4>';
+  if (!g.history.length) return `<div class="panel"><div class="hist-empty">Noch keine Prüfung gespeichert.</div></div>`;
+  let html = `<div class="panel"><h4>Verlauf</h4>`;
   g.history.forEach((h, idx) => {
-    html += '<details style="margin-bottom:0.6rem;">' +
-      '<summary>' + fmtDate(h.ts) + ' – Blöcke: ' + h.blocks.join(", ") + ' (' + h.entries.length + ' Fragen)</summary>' +
-      '<div style="margin:0.5rem 0;"><button class="btn-ghost btn-small" onclick="exportExamPdf(\'' + g.id + '\', ' + idx + ')">Als PDF exportieren</button></div>' +
-      '<table class="history"><tr><th>Block</th><th>AFB</th><th>Frage</th><th>Bewertung</th></tr>' +
-      h.entries.map((e) => '<tr><td>' + e.block + '</td><td>' + AFB_LABEL[e.afb] + '</td><td>' + e.question + '</td><td>' + (e.rating || "–") + '</td></tr>').join("") +
-      '</table>' + renderAuswertung(h.entries) + '</details>';
+    const niv = h.niveau ? ` · ${h.niveau.label} (${h.niveau.pct.afb1}/${h.niveau.pct.afb2}/${h.niveau.pct.afb3})` : "";
+    html += `<details style="margin-bottom:0.6rem;">
+      <summary>${fmtDate(h.ts)} – Blöcke: ${h.blocks.join(", ")}${niv} (${h.entries.length} Fragen)</summary>
+      <div style="margin:0.5rem 0;"><button class="btn-ghost btn-small" onclick="exportExamPdf('${g.id}', ${idx})">Als PDF exportieren</button></div>
+      <table class="history"><tr><th>Block</th><th>AFB</th><th>Frage</th><th>Bewertung</th></tr>
+      ${h.entries.map((e) => `<tr><td>${entryBlock(e)}</td><td>${entryAfb(e)}</td><td>${esc(e.question)}</td><td>${e.rating || "–"}</td></tr>`).join("")}
+      </table>
+      ${renderAuswertung(h.entries)}
+    </details>`;
   });
-  html += '</div>';
+  html += `</div>`;
   return html;
 }
 
@@ -806,63 +852,67 @@ function exportExamPdf(groupId, examIndex) {
   const g = findGroup(groupId);
   if (!g || !g.history[examIndex]) return;
   const h = g.history[examIndex];
-
   const rated = h.entries.filter((e) => e.rating);
   const counts = { "++": 0, "+": 0, "0": 0, "-": 0, "--": 0 };
   rated.forEach((e) => counts[e.rating]++);
   let avgBlock = "";
   if (rated.length) {
-    const avg = rated.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / rated.length;
-    const afbGroups = { afb1: [], afb2: [], afb3: [] };
-    rated.forEach((e) => afbGroups[AFB_GROUP[e.afb]].push(e));
-    const afbLabels = { afb1: "AFB I", afb2: "AFB II", afb3: "AFB III" };
+    const avg = avgOf(rated);
     let afbRows = "";
-    Object.entries(afbGroups).forEach(([afb, list]) => {
+    AFBS.forEach((afb) => {
+      const list = rated.filter((e) => e.afb === afb);
       if (!list.length) return;
-      const a = list.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / list.length;
-      afbRows += "<tr><td>" + afbLabels[afb] + "</td><td>" + list.length + "</td><td>" + a.toFixed(1) + " (" + gradeSuggestion(a) + ")</td></tr>";
+      const a = avgOf(list);
+      afbRows += `<tr><td>${AFB_LABEL[afb]}</td><td>${list.length}</td><td>${a.toFixed(1)} (${gradeSuggestion(a)})</td></tr>`;
     });
-    const kiRated = rated.filter((e) => IS_KI[e.afb]);
-    let kiRow = "";
-    if (kiRated.length) {
-      const ka = kiRated.reduce((s, e) => s + RATING_SCORE[e.rating], 0) / kiRated.length;
-      kiRow = "<tr><td>davon KI-Kompetenz</td><td>" + kiRated.length + "</td><td>" + ka.toFixed(1) + " (" + gradeSuggestion(ka) + ")</td></tr>";
-    }
-    avgBlock =
-      "<h2>Auswertung</h2><p>Bewertete Fragen: <strong>" + rated.length + "</strong> von " + h.entries.length + "<br>" +
-      "Verteilung: ++ " + counts["++"] + " | + " + counts["+"] + " | 0 " + counts["0"] + " | - " + counts["-"] + " | -- " + counts["--"] + "<br>" +
-      "Gesamtdurchschnitt: <strong>" + avg.toFixed(2) + "</strong> &rarr; Notenvorschlag: <strong>" + gradeSuggestion(avg) + "</strong></p>" +
-      "<table class='tbl'><tr><th>Bereich</th><th>Fragen</th><th>&Oslash; / Vorschlag</th></tr>" + afbRows + kiRow + "</table>" +
-      "<p class='disc'>Rechnerischer Vorschlag auf Basis der Ampel-Bewertungen. Ersetzt nicht die fachliche Einschätzung der Lehrkraft. Die Reihennote setzt sich laut Masterdokument (Abschnitt 5) aus Portfolio, KI-Dokumentation, Prüfungsgespräch und Mitarbeit zusammen.</p>";
+    const kiList = rated.filter((e) => e.ki);
+    if (kiList.length) { const a = avgOf(kiList); afbRows += `<tr><td>davon KI-Kompetenz</td><td>${kiList.length}</td><td>${a.toFixed(1)} (${gradeSuggestion(a)})</td></tr>`; }
+    avgBlock = `<h2>Auswertung</h2>
+      <p>Bewertete Fragen: <strong>${rated.length}</strong> von ${h.entries.length}<br>
+      Verteilung: ++ ${counts["++"]} | + ${counts["+"]} | 0 ${counts["0"]} | - ${counts["-"]} | -- ${counts["--"]}<br>
+      Gesamtdurchschnitt: <strong>${avg.toFixed(2)}</strong> &rarr; Notenvorschlag: <strong>${gradeSuggestion(avg)}</strong></p>
+      <table class="tbl"><tr><th>Bereich</th><th>Fragen</th><th>&Oslash; / Vorschlag</th></tr>${afbRows}</table>
+      <p class="disc">Rechnerischer Vorschlag auf Basis der Bewertungen. Ersetzt nicht die fachliche Einsch&auml;tzung der Lehrkraft. Die Reihennote setzt sich laut Masterdokument (Abschnitt 5) aus Portfolio (15 %), KI-Dokumentation (15 %) und m&uuml;ndlichem Pr&uuml;fungsgespr&auml;ch (70 %) zusammen; die Mitarbeit wird als separate Note gef&uuml;hrt.</p>`;
   }
-
-  const rows = h.entries.map((e) =>
-    "<tr><td>" + e.block + "</td><td>" + AFB_LABEL[e.afb] + "</td><td>" + e.question + "</td><td class='rat'>" + (e.rating || "–") + "</td></tr>"
-  ).join("");
-
+  const niv = h.niveau ? `Anspruchsniveau: ${h.niveau.label} (AFB I ${h.niveau.pct.afb1} % / AFB II ${h.niveau.pct.afb2} % / AFB III ${h.niveau.pct.afb3} %)<br>` : "";
+  const rows = h.entries.map((e) => `<tr><td>${entryBlock(e)}</td><td>${entryAfb(e)}</td><td>${esc(e.question)}</td><td class="rat">${e.rating || "–"}</td></tr>`).join("");
   const win = window.open("", "_blank");
   if (!win) { showToast("Bitte Pop-ups für diese Seite erlauben"); return; }
-  win.document.write('<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Pruefungsprotokoll ' + g.name + '</title>' +
-    '<style>body{font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;margin:2rem;line-height:1.5;}' +
-    'h1{color:#0D1B2A;font-size:1.4rem;margin-bottom:0.2rem;}h2{color:#0D1B2A;font-size:1.1rem;margin-top:1.5rem;border-bottom:1px solid #ccc;padding-bottom:0.2rem;}' +
-    '.meta{color:#555;font-size:0.9rem;margin-bottom:1rem;}table{width:100%;border-collapse:collapse;margin-top:0.5rem;font-size:0.9rem;}' +
-    'th,td{border:1px solid #ccc;padding:0.4rem 0.5rem;text-align:left;vertical-align:top;}th{background:#37474F;color:#fff;font-size:0.82rem;}' +
-    '.rat{text-align:center;font-weight:bold;width:60px;}.tbl td:first-child{font-weight:bold;}.disc{font-size:0.75rem;color:#666;font-style:italic;margin-top:0.8rem;}' +
-    '.sign{margin-top:2.5rem;display:flex;gap:3rem;}.sign div{border-top:1px solid #333;padding-top:0.3rem;font-size:0.85rem;flex:1;}' +
-    '@media print{body{margin:1.5cm;}.noprint{display:none;}}.btn{background:#0D1B2A;color:#fff;border:none;padding:0.6rem 1.2rem;border-radius:6px;font-size:0.9rem;cursor:pointer;margin-bottom:1rem;}</style></head><body>' +
-    '<button class="btn noprint" onclick="window.print()">Als PDF speichern / drucken</button>' +
-    '<h1>Pr&uuml;fungsprotokoll &ndash; ' + g.name + '</h1>' +
-    '<div class="meta">WPK Naturwissenschaften &middot; Einheit 2: Tierwelt Afrikas<br>Datum der Pr&uuml;fung: ' + fmtDate(h.ts) + ' &middot; Gepr&uuml;fte Bl&ouml;cke: ' + h.blocks.join(", ") + '</div>' +
-    '<h2>Fragen und Bewertungen</h2><table><tr><th>Block</th><th>AFB</th><th>Frage</th><th>Bewertung</th></tr>' + rows + '</table>' +
-    avgBlock +
-    '<div class="sign"><div>Datum, Unterschrift Lehrkraft</div><div>Bemerkungen</div></div></body></html>');
+  win.document.write(`<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+    <title>Pruefungsprotokoll ${esc(g.name)}</title>
+    <style>
+      body { font-family: Arial, Helvetica, sans-serif; color: #1a1a1a; margin: 2rem; line-height: 1.5; }
+      h1 { color: #0D1B2A; font-size: 1.4rem; margin-bottom: 0.2rem; }
+      h2 { color: #0D1B2A; font-size: 1.1rem; margin-top: 1.5rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+      .meta { color: #555; font-size: 0.9rem; margin-bottom: 1rem; }
+      table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.9rem; }
+      tr { page-break-inside: avoid; }
+      th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; text-align: left; vertical-align: top; }
+      th { background: #37474F; color: #fff; font-size: 0.82rem; }
+      .rat { text-align: center; font-weight: bold; width: 60px; }
+      .tbl td:first-child { font-weight: bold; }
+      .disc { font-size: 0.75rem; color: #666; font-style: italic; margin-top: 0.8rem; }
+      .sign { margin-top: 2.5rem; display: flex; gap: 3rem; page-break-inside: avoid; }
+      .sign div { border-top: 1px solid #333; padding-top: 0.3rem; font-size: 0.85rem; flex: 1; }
+      @media print { body { margin: 1.5cm; } .noprint { display: none; } }
+      .btn { background: #0D1B2A; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.9rem; cursor: pointer; margin-bottom: 1rem; }
+    </style></head><body>
+    <button class="btn noprint" onclick="window.print()">Als PDF speichern / drucken</button>
+    <h1>Pr&uuml;fungsprotokoll &ndash; ${esc(g.name)}</h1>
+    <div class="meta">WPK Naturwissenschaften &middot; Einheit 1: Klimawandel und Klimaschutz<br>
+      Datum der Pr&uuml;fung: ${fmtDate(h.ts)} &middot; Bearbeitete Bl&ouml;cke: ${h.blocks.join(", ")}<br>${niv}</div>
+    <h2>Fragen und Bewertungen</h2>
+    <table><tr><th>Block</th><th>AFB</th><th>Frage</th><th>Bewertung</th></tr>${rows}</table>
+    ${avgBlock}
+    <div class="sign"><div>Datum, Unterschrift Lehrkraft</div><div>Bemerkungen</div></div>
+    </body></html>`);
   win.document.close();
 }
 
 function render() {
   const list = document.getElementById("groupList");
   if (!state.groups.length) {
-    list.innerHTML = '<div class="empty">Noch keine Gruppen angelegt. Fügt oben eure erste Gruppe hinzu.</div>';
+    list.innerHTML = `<div class="empty">Noch keine Gruppen angelegt. Fügt oben eure erste Gruppe hinzu.</div>`;
     return;
   }
   const sorted = [...state.groups].sort((a, b) => a.name.localeCompare(b.name, "de"));
@@ -871,13 +921,17 @@ function render() {
     let panelHtml = "";
     if (open === "neu") panelHtml = renderNeuPanel(g);
     else if (open === "verlauf") panelHtml = renderVerlaufPanel(g);
-    return '<div class="card"><div class="card-head"><span class="card-name">' + g.name + '</span></div>' +
-      '<div class="card-actions">' +
-      '<button class="btn-primary btn-small" onclick="togglePanel(\'' + g.id + '\',\'neu\')">Neue Prüfung</button> ' +
-      '<button class="btn-ghost btn-small" onclick="togglePanel(\'' + g.id + '\',\'verlauf\')">Verlauf (' + g.history.length + ')</button> ' +
-      '<button class="btn-ghost btn-small" onclick="deleteGroup(\'' + g.id + '\')">' + (deleteArmed[g.id] ? "Wirklich löschen?" : "Löschen") + '</button>' +
-      '</div>' + panelHtml + '</div>';
+    return `<div class="card">
+      <div class="card-head"><span class="card-name">${esc(g.name)}</span></div>
+      <div class="card-actions">
+        <button class="btn-primary btn-small" onclick="togglePanel('${g.id}','neu')">Neue Prüfung</button>
+        <button class="btn-ghost btn-small" onclick="togglePanel('${g.id}','verlauf')">Verlauf (${g.history.length})</button>
+        <button class="btn-ghost btn-small" onclick="deleteGroup('${g.id}')">${deleteArmed[g.id] ? "Wirklich löschen?" : "Löschen"}</button>
+      </div>
+      ${panelHtml}
+    </div>`;
   }).join("");
+  sorted.forEach((g) => { if (openPanels[g.id] === "neu") updateCalc(g.id); });
 }
 
 document.getElementById("addGroupBtn").addEventListener("click", addGroup);
@@ -890,6 +944,7 @@ document.getElementById("importFile").addEventListener("change", (e) => {
 });
 
 loadState();
+
 </script>
 </body>
 </html>
